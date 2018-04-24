@@ -10,6 +10,7 @@ header{1} = 'Time';
 X(:, 1) = ds.get(1).Values.Time;
 for i = 2:N
     header{i} = ds.get(i-1).Name;
+%     disp(header{i});
     X(:, i) = ds.get(i-1).Values.Data;
     if showG
         figure
