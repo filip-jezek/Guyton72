@@ -10,8 +10,9 @@ file = 'g72 low salt non-oscillating.mat';
 raw_read = load(file);
 ds = raw_read.ds;
 % ds = raw_read;
-N = ds.numElements;
+
 %% get the data into my struct
+N = ds.numElements;
 header{1} = 'Time';
 X(:, 1) = ds.get(1).Values.Time;
 for i = 2:N

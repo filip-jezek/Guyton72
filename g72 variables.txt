@@ -1,0 +1,211 @@
+AAR-afferent arteriolar resistance [torr/l/min]
+AHM-antidiuretic hormone multiplier, ratio of normal effect
+AM-aldosterone multiplier, ratio of normal effect
+AMC-aldosterone concentration
+AMM-muscle vascular constriction caused by local tissue control, ratio to resting state
+AMP-effect of arterial pressure on rate of aldosterone secretion
+AMR-effect of sodium to potassium ratio on aldosterone secretion rate
+AMT-time constant of aldosterone accumulation and destruction
+ANC-angiotensin concentration
+ANM-angiotensin multiplier effect on vascular resistance, ratio to normal
+ANN-effect of sodium concentration on rate of angiotensin formation
+ANP-effect of renal blood flow on angiotensin formation
+ANT-time constant of angiotensin accumulation and destruction
+ANU-nonrenal effect of angiotensin
+AOM-autonomic effect on tissue oxygen utilization
+APD-afferent arteriolar pressure drop [torr]
+ARF-intensity of sympathetic effects on renal function
+ARM-vasoconstrictor effect of all types of autoregulation
+AR1-vasoconstrictor effect of rapid autoregulation
+AR2-vasoconstrictor effects of intermediate autoregulation
+AR3-vasoconstrictor effect of long-term autoregulation
+AU-overall activity of autonomic system, ratio to normal
+AUB-effect of baroreceptors on autoregulation
+AUC-effect of chemoreceptors on autonomic stimulation
+AUH-autonomic stimulation of heart, ratio to normal
+
+AUK-time constant of baroreceptor adaptation
+AUL-sensitivity of sympathetic control of vascular capacitance
+AUM-sympathetic vasoconstrictor effect on arteries
+AUN-effect of CNS ischemic reflex on auto-regulation
+AUV-sensitivity control of autonomies on heart function
+AUY-sensitivity of sympathetic control of veins
+AUZ-overall sensitivity of autonomic control
+AVE-sympathetic vasoconstrictor effect on veins
+AlK-time constant of rapid autoregulation
+A2K-time constant of intermediate autoregulation
+A3K-time constant of long-term autoregulation
+A4K-time constant for muscle local vascular response to metabolic activity
+BFM-muscle blood flow [l/min]
+BFN-blood flow in non-muscle, non-renal tissues [l/min]
+CA-capacitance of systemic arteries [l/torr]
+CCD-concentration gradient across cell membrane [mmol/l]
+CHY-concentration of hyaluronic acid in tissue fluids [g/l]
+CKE-extracellular potassium concentration [mmol/l]
+CKI-intracellular potassium concentration [mmol/l]
+CNA-extracellular sodium concentration [mmol/l]
+CNE-sodium concentration abnormality causing third factor effect [mmo/l]
+CPG-concentration of protein in tissue gel [g/l]
+CPI-concentration of protein in free interstitial fluid [g/l]
+CPN-concentration of protein in pulmonary fluids [g/l]
+CPP-plasma protein concentration [g/l]
+CV-venous capacitance [l/torr]
+DAS-rate of volume increase of systemic arteries [l/min]
+DFP-rate of increase in pulmonary free fluid [l/min]
+DHM-rate of cardiac deterioration caused by hypoxia
+DLA-rate of volume increase in pulmonary veins and left atrium [l/min]
+
+DLP-rate of formation of plasma protein by liver [g/min]
+DOB-rate of oxygen delivery to non-muscle cells [ml O2/min]
+DPA-rate of increase in pulmonary volume [l/min]
+DPC-rate of loss of plasma proteins through systemic capillaries [g/min]
+DPI-rate of change of protein in free interstitial fluid [g/min]
+DPL-rate of systemic lymphatic return of protein [g/min]
+DPO -rate of loss of plasma protein [g/min]
+DRA-rate of increase in right atrial volume [l/min]
+DVS-rate of increase in venous vascular volume [l/min]
+EVR-postglomerular resistance [torr/l]
+EXC-exercise activity, ratio to activity at rest
+EXE-exercise effect on autonomic stimulation
+GFN-glomerular filtration rate of undamaged kidney [l/min]
+GFR-glomerular filtration rate [l/min]
+GLP-glomerular pressure [torr]
+GPD-rate of increase of protein in gel  [l/min]
+GPR-total protein in gel  [g]
+HM-hematocrit [%]
+HMD-cardiac depressant effect of hypoxia
+HPL-hypertrophy effect on left ventricle
+HPR-hypertrophy effect on heart, ratio to normal
+HR-heart rate [beats/min]
+HSL-basic left ventricular strength
+HSR-basic strength of right ventricle
+HYL-quantity of hyaluronic acid in tissues [g]
+IFP-interstitial fluid protein [g]
+KCD-rate of change of potassium concentration [mmol/min]
+KE-total extracellular fluid potassium [mmol]
+KED-rate of change of extracellular fluid potassium concentration [mmol/min]
+KI-total intracellular potassium concentration [mmol/l]
+
+KID-rate of potassium intake [mmol/min]
+KOD-rate of renal loss of potassium [mmol/min]
+LVM-effect of aortic pressure on left ventricular output
+MMO-rate of oxygen utilization by muscle cells [ml/min]
+M02--rate of oxygen utilization by non-muscle cells [ml/min]
+NAE-total extracellular sodium [mmol]
+NED-rate of change of sodium in intracellular fluids [mmol/min]
+NID-rate of sodium intake [mmol/min]
+NOD-rate of renal excretion of sodium [mmol/min]
+OMM-muscle oxygen utilization at rest [ml/min]
+OSA-aortic oxygen saturation
+OSV-non-muscle venous oxygen saturation
+OVA-oxygen volume in aortic blood [ml O2/l blood]
+OVS-muscle venous oxygen saturation
+O2M-basic oxygen utilization in non-muscle body tissues [ml/min]
+PA-aortic pressure  [torr] 
+PAM-effect of arterial pressure in distending arteries, ratio to normal
+PC-capillary pressure  [torr]
+PCD-net pressure gradient across capillary membrane  [torr]
+POP-pulmonary capillary pressure  [torr]
+PDO-difference between muscle venous oxygen PO2 and normal venous oxygen PO2  [torr]
+PFI-rate of transfer of fluid across pulmonary capillaries [l/min]
+PFL-renal filtration pressure  [torr]
+PGC-colloid osmotic pressure of tissue gel  [torr]
+PGH-absorbency effect of gel caused by recoil of gel reticulum  [torr]
+PGL-pressure gradient in lungs  [torr]
+PGP-colloid osmotic pressure of tissue gel caused by entrapped protein  [torr]
+PGR-colloid osmotic pressure of interstitial gel caused by Donnan equilibrium  [torr]
+PIF-interstitial fluid pressure  [torr]
+PLA-left atrial pressure  [torr]
+
+PLD-pressure gradient to cause lymphatic flow  [torr]
+PLF-pulmonary lymphatic flow  [torr]
+PMO-muscle cell PO2  [torr]
+POD-non-muscle venous PO2 minus normal value  [torr]
+POK-sensitivity of rapid system of autoregulation
+PON-sensitivity of intermediate autoregulation
+POS-pulmonary interstitial fluid colloid osmotic pressure  [torr]
+POT-non-muscle cell PO2  [torr]
+POV-non-muscle venous PO2 [torr]
+POY-sensitivity of red cell production
+POZ-sensitivity of long-term autoregulation
+PO2-oxygen deficit factor causing red cell production
+PPA-pulmonary arterial pressure  [torr]
+PPC-plasma colloid osmotic pressure  [torr]
+PPD-rate of change of protein in pulmonary fluids
+PPI-pulmonary interstitial fluid pressure  [torr]
+PPN-rate of pulmonary capillary protein loss [g/min]
+PPO-pulmonary lymph protein flow [g/min]
+PPR-total protein in pulmonary fluids [g]
+PRA-right atrial pressure  [torr]
+PRM-pressure caused by compression of interstitial fluid gel reticulum [torr]
+PRP-total plasma protein [g]
+PTC-interstitial fluid colloid osmotic pressure  [torr]
+PTS-solid tissue pressure  [torr]
+PTT-total tissue pressure  [torr]
+PGV-pressure from veins to right atrium  [torr]
+PVG-venous pressure gradient  [torr]
+PVO-muscle venous PO2  [torr]
+PVS-average venous pressure  [torr]
+QAO-blood flow in the systemic arterial system [l/min]
+
+QLN-basic left ventricular output [l/min]
+QLO-output of left ventricle [l/min]
+QOM-total volume of oxygen in muscle cells [ml]
+QO2-non-muscle total cellular oxygen [ml]
+QPO-rate of blood flow into pulmonary veins and left atrium [l/min]
+QRF-feedback effect of left ventricular function on right ventricular function
+QRN-basic right ventricular output [l/min]
+QRO-actual right ventricular output [l/min]
+QVO-rate of blood flow from veins into right atrium [l/min]
+RAM-basic vascular resistance of muscles [torr/l/min]
+RAR-basic resistance of non-muscular and non-renal arteries [torr/l/min]
+RBF-renal blood flow [l/min]
+RC1-red cell production rate [l/min]
+RC2-red cell destruction rate [l/min]
+RCD-rate of change of red cell mass [l/min]
+REK-percent of normal renal function
+RFN-renal blood flow if kidney is not damaged [l/min]
+RKC-rate factor for red cell destruction
+RM0-rate of oxygen transport to muscle cells [ml/min]
+RPA-pulmonary arterial resistance [torr/l/min]
+RPT-pulmonary vascular resistance [torr/l/min]
+RPV-pulmonary venous resistance [torr/l/min]
+RR-renal resistance [torr/l/min]
+RSM-vascular resistance in muscles [torr/l/min]
+RSN-vascular resistance in non-muscle, non-renal tissues [torr/l/min]
+RVG-resistance from veins to right atrium [torr/l/min]
+RVM-depressing effect on right ventricle of pulmonary arterial pressure
+RVS-venous resistance [torr/l/min]
+SR-intensity factor for stress relaxation
+SRK-time constant for stress relaxation
+
+STH-effect of tissue hypoxia on salt and water intake
+SVO-stroke volume output [l]
+TRR-tubular reabsorption rate [l/min]
+TVD-rate of drinking [l/min]
+VAS-volume in systemic arteries [l]
+VB-blood volume [l]
+VEC-extracellular fluid volume [l]
+VG-volume of interstitial fluid gel [l]
+VGD-rate of change of tissue gel volumes [l/min]
+VIB-blood viscosity, ratio to that of water
+VIC-cell volume [l]
+VID-rate of fluid transfer between interstitial fluid and cells [l/min]
+VIE-portion of blood viscosity caused by red blood cells
+VIF-volume of free interstitial fluid [l]
+VIM-blood viscosity (ratio to normal blood)
+VLA-volume in left atrium [l]
+VP-plasma volume [l]
+VPA-volume in pulmonary arteries [l]
+VPD-rate of change of plasma volume [l]
+VPF-pulmonary free fluid volume [l]
+VRA-right atrial volume [l]
+VTC-rate of fluid transfer across systemic capillary membranes [l/min]
+VTD-rate of volume change in total interstitial fluid [l/min]
+VTL-rate of systemic lymph flow [l/min]
+VTW-total body water [l]
+VUD-rate of urinary output [l/min]
+VV7-increased vascular volume caused by stress relaxation [l]
+VVR-diminished vascular volume caused by sympathetic stimulation [l]
+VVS-venous vascular volume [l]
+Z8-time constant of autonomic response
