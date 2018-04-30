@@ -17,14 +17,14 @@
   t3 = t1*2;
   % from here to end once per 10800
   
-ind1 = find(time > t1, 1);
-ind2 = find(time > t2, 1);
-ind3 = find(time > t3, 1);
-
-si1 = (1:ind1);
-si2 = (ind1:ind2);
-si3 = (ind2:ind3);
-si4 = (ind3:N);
+% ind1 = find(time > t1, 1);
+% ind2 = find(time > t2, 1);
+% ind3 = find(time > t3, 1);
+% 
+% si1 = (1:ind1);
+% si2 = (ind1:ind2);
+% si3 = (ind2:ind3);
+% si4 = (ind3:N);
 
 do1 = interp1(time, data, 1:1440:t1);
 do2 = interp1(time, data, t1:360:t2);
@@ -39,7 +39,7 @@ clf; hold on;
 plot(timeo, datao(:, 1:3), '-*')
 
 %% write to file
-csvfile = 'G72resampled-Na0_04.csv';
+csvfile = 'G72resampled.csv';
 
 textHeader = strjoin(header, ',');
 %write header to file
