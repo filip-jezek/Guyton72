@@ -39,7 +39,7 @@ clf; hold on;
 plot(timeo, datao(:, 1:3), '-*')
 
 %% write to file
-csvfile = 'G72resampled.csv';
+csvfile = 'G72resampled-Na0_04.csv';
 
 textHeader = strjoin(header, ',');
 %write header to file

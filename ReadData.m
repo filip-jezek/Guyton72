@@ -13,6 +13,7 @@ ds = raw_read.ds;
 
 %% get the data into my struct
 clear X;
+showG = false;
 N = ds.numElements;
 header{1} = 'Time';
 X(:, 1) = ds.get(1).Values.Time;
