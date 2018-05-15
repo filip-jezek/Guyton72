@@ -5,6 +5,26 @@
 %   data_raw_read = importdata(file,',',2);
 %   time = data_raw_read.data(:,1);
 %   data = data_raw_read.data(:,2:end);
+%% get the data into my struct
+ds = Simulink.SimulationData.Dataset(logsout);
+clear X;
+showG = false;
+N = ds.numElements;
+header{1} = 'Time';
+X(:, 1) = ds.get(1).Values.Time;
+for i = 2:N
+    header{i} = ds.get(i-1).Name;
+
+    X(:, i) = ds.get(i-1).Values.Data;
+    if showG
+        figure
+        plot(ds.get(i-1).Values.Time, ds.get(i-1).Values.Data);
+        title(ds.get(i-1).Name);
+    end
+end
+
+time = X(:, 1);
+data = X(:, 2:end);
 %% expects time [X], data [X Y], header [Y]
   last = time(end);
   N = length(time);
@@ -39,7 +59,7 @@ clf; hold on;
 plot(timeo, datao(:, 1:3), '-*')
 
 %% write to file
-csvfile = 'G72resampled-Na0_04.csv';
+csvfile = 'G72resampled-Na0_04-STH1.csv';
 
 textHeader = strjoin(header, ',');
 %write header to file
