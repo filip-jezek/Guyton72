@@ -1,14 +1,19 @@
-%% resample
+function resample(ds, experiment_name, showG)
 
 %% load data from csv or use the ReadData script
 %   file = 'G72.csv';
 %   data_raw_read = importdata(file,',',2);
 %   time = data_raw_read.data(:,1);
 %   data = data_raw_read.data(:,2:end);
-%% get the data into my struct
-ds = Simulink.SimulationData.Dataset(logsout);
-clear X;
-showG = false;
+
+%% 
+% clear X;
+% ds = Simulink.SimulationData.Dataset(logsout);
+% showG = false;
+if showG
+   figure();clf;hold on;
+end
+
 N = ds.numElements;
 header{1} = 'Time';
 X(:, 1) = ds.get(1).Values.Time;
@@ -17,7 +22,6 @@ for i = 2:N
 
     X(:, i) = ds.get(i-1).Values.Data;
     if showG
-        figure
         plot(ds.get(i-1).Values.Time, ds.get(i-1).Values.Data);
         title(ds.get(i-1).Name);
     end
@@ -54,19 +58,18 @@ do4 = interp1(time, data, t3:10080:last);
 timeo = [1:1440:t1, t1:360:t2, t2:360:t3, t3:10080:last];
 datao = [do1; do2; do3; do4];
 
-clf; hold on;
+figure; clf; hold on;
 %plot(time(si1), data(si1, 1), '*')
 plot(timeo, datao(:, 1:3), '-*')
 
 %% write to file
-csvfile = 'G72resampled-Na0_04-STH1.csv';
+csvfile = [experiment_name '.csv'];
 
 textHeader = strjoin(header, ',');
 %write header to file
 fid = fopen(csvfile,'w'); 
 fprintf(fid,'%s\n',textHeader);
 fclose(fid);
-
 
 datapack = [timeo', datao];
 
