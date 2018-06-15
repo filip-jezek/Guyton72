@@ -1,7 +1,7 @@
 %% init
 clear;
 close all;
-model_name = 'GuytonModel1972_R2018';
+model_name = 'GuytonModel1972_R2015a';
 % set the NID input from workspace
 set_param([model_name '/Manual Switch142'], 'sw', '0');
 set_param([model_name '/From Workspace'], 'commented', 'off');
