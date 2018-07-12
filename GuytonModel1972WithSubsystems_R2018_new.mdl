@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.68"
+    ComputedModelVersion    "1.69"
     NumModelReferences	    0
     NumTestPointedSignals   41
     TestPointedSignal {
@@ -347,7 +347,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [-3.0, 0.0, 970.0, 1045.0]
+      Location		      [-6.0, -6.0, 1933.0, 1053.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -372,27 +372,27 @@ Model {
 	  IsActive		  [1]
 	  ViewObjType		  "SimulinkTopLevel"
 	  LoadSaveID		  "0"
-	  Extents		  [1844.0, 1765.0]
-	  ZoomFactor		  [0.4]
-	  Offset		  [1667.4035145888511, 1763.4833333333263]
+	  Extents		  [3770.0, 1781.0]
+	  ZoomFactor		  [0.49999999999999994]
+	  Offset		  [1360.3618479221914, 1963.8166666666616]
 	}
 	Object {
 	  $ObjectID		  6
 	  IsActive		  [0]
 	  ViewObjType		  "SimulinkSubsys"
 	  LoadSaveID		  "1316"
-	  Extents		  [7540.0, 3562.0]
+	  Extents		  [13152.0, 3840.0]
 	  ZoomFactor		  [0.6]
-	  Offset		  [-1328.1360285367632, -1140.6082608300519]
+	  Offset		  [-1328.1360285367628, -1140.6082608300519]
 	}
 	Object {
 	  $ObjectID		  7
 	  IsActive		  [0]
 	  ViewObjType		  "SimulinkSubsys"
 	  LoadSaveID		  "1520"
-	  Extents		  [7540.0, 3562.0]
+	  Extents		  [13152.0, 3840.0]
 	  ZoomFactor		  [0.6]
-	  Offset		  [-363.37500000000045, -141.16667477289843]
+	  Offset		  [-363.375, -141.16667477289843]
 	}
 	PropName		"EditorsInfo"
       }
@@ -414,7 +414,7 @@ Model {
       "AAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0Ac"
       "ABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAAC+AP///wAAAAEAAAAAAAAAAPwCA"
       "AAAAfsAAABUAEcATABVAEUAMgA6AFAAcgBvAHAAZQByAHQAeQBJAG4AcwBwAGUAYwB0AG8AcgAvAFAAcgBvAHAAZQByAHQAeQAgAEkAbgBzAHAAZ"
-      "QBjAHQAbwByAAAAAAD/////AAAATwD///8AAAd6AAAHTwAAAAEAAAACAAAAAQAAAAL8AAAAAQAAAAIAAAAP/////wAAAAAA/////wAAAAAAAAAA/"
+      "QBjAHQAbwByAAAAAAD/////AAAATwD///8AAA8AAAAHXwAAAAEAAAACAAAAAQAAAAL8AAAAAQAAAAIAAAAP/////wAAAAAA/////wAAAAAAAAAA/"
       "////wEAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/"
       "////wEAAADb/////wAAAAAAAAAA/////wEAAAGG/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wEAAAJh/////wAAAAAAAAAA/"
       "////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wAAAAAA/////wAAAAAAAAAA/////wEAAAXI/////wAAAAAAAAAA/"
@@ -428,9 +428,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Jirka"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sun Jul 08 06:03:22 2018"
-  RTWModifiedTimeStamp	  452930087
-  ModelVersionFormat	  "1.%<AutoIncrement:68>"
+  LastModifiedDate	  "Mon Jul 09 05:00:48 2018"
+  RTWModifiedTimeStamp	  452977511
+  ModelVersionFormat	  "1.%<AutoIncrement:69>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "none"
@@ -2646,7 +2646,7 @@ Model {
   }
   System {
     Name		    "GuytonModel1972WithSubsystems_R2018_new"
-    Location		    [-3, 0, 967, 1045]
+    Location		    [-6, -6, 1927, 1047]
     Open		    on
     PortBlocksUseCompactNotation off
     SetDomainSpec	    off
@@ -2661,9 +2661,9 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "40"
+    ZoomFactor		    "50"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "4000"
+    SIDHighWatermark	    "4001"
     Block {
       BlockType		      Constant
       Name		      "AOM"
@@ -9337,7 +9337,7 @@ Model {
       }
       System {
 	Name			"Circulatory Dynamics"
-	Location		[-5, 0, 965, 1045]
+	Location		[-6, -6, 1927, 1047]
 	Open			off
 	PortBlocksUseCompactNotation off
 	SetDomainSpec		off
@@ -9352,7 +9352,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"40"
+	ZoomFactor		"50"
 	Block {
 	  BlockType		  Inport
 	  Name			  "ARM"
@@ -10541,15 +10541,14 @@ Model {
 	  BlockType		  Product
 	  Name			  "Product81"
 	  SID			  "2191"
-	  Ports			  [3, 1]
-	  Position		  [5495, -516, 5540, -464]
+	  Ports			  [2, 1]
+	  Position		  [5495, -514, 5540, -461]
 	  ZOrder		  37
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
 	  FontSize		  12
 	  FontWeight		  "bold"
-	  Inputs		  "3"
 	}
 	Block {
 	  BlockType		  Product
@@ -12292,14 +12291,6 @@ Model {
 	  DstPort		  2
 	}
 	Line {
-	  ZOrder		  376
-	  SrcBlock		  "Constant84"
-	  SrcPort		  1
-	  Points		  [0, 20]
-	  DstBlock		  "Product81"
-	  DstPort		  2
-	}
-	Line {
 	  Name			  "RVG"
 	  FontSize		  12
 	  FontWeight		  "bold"
@@ -12548,15 +12539,15 @@ Model {
 	  SrcPort		  1
 	  Points		  [-15, 0]
 	  Branch {
-	    ZOrder		    585
+	    ZOrder		    760
+	    DstBlock		    "Product81"
+	    DstPort		    2
+	  }
+	  Branch {
+	    ZOrder		    759
 	    Points		    [0, 35]
 	    DstBlock		    "RVS"
 	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    584
-	    DstBlock		    "Product81"
-	    DstPort		    3
 	  }
 	}
 	Line {
@@ -12700,17 +12691,8 @@ Model {
 	  Branch {
 	    ZOrder		    457
 	    Points		    [0, -80]
-	    Branch {
-	      ZOrder		      456
-	      Points		      [0, -75; 900, 0]
-	      DstBlock		      "Product81"
-	      DstPort		      1
-	    }
-	    Branch {
-	      ZOrder		      455
-	      DstBlock		      "Product55"
-	      DstPort		      3
-	    }
+	    DstBlock		    "Product55"
+	    DstPort		    3
 	  }
 	}
 	Line {
@@ -12944,6 +12926,14 @@ Model {
 	  Points		  [-25, 0]
 	  DstBlock		  "Sum59"
 	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  758
+	  SrcBlock		  "Constant84"
+	  SrcPort		  1
+	  Points		  [-42, 0; 0, 10]
+	  DstBlock		  "Product81"
+	  DstPort		  1
 	}
 	Annotation {
 	  SID			  "2237"
@@ -22793,7 +22783,6 @@ Model {
       Position		      [2610, 3452, 2640, 3488]
       ZOrder		      -312
       ShowName		      off
-      CurrentSetting	      "0"
     }
     Block {
       BlockType		      ManualSwitch
@@ -29672,7 +29661,7 @@ Model {
       }
       System {
 	Name			"Red Cells And Viscosity"
-	Location		[-3, 0, 967, 1045]
+	Location		[-6, -6, 1927, 1047]
 	Open			off
 	PortBlocksUseCompactNotation off
 	SetDomainSpec		off
