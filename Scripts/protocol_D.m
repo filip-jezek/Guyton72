@@ -1,21 +1,29 @@
-% protocol_A
-stopTime = 60*24*(10*360+12);
-times = [0, 60*24*14, 60*24*(10*360)];
+% protocol_D - salt loading experiment according to the NASA report
 
-NID_vals = [0.1, 0.1, 0.5];
-REK_vals = [1, 0.3, 0.3];
+% when the steady state is reached
+ss = 2e6; 
+% ss = 2e4; 
+% times = [initial, steady state, REK, NID, final]
+times = [0, ss, ss + 2*60, ss + 60*96];
+stopTime = ss + 60*192;
+
+NID_vals = [0.1, 0.1, 0.1, 0.5];
+REK_vals = [1, 1, 0.3, 0.3];
 NID_input = [times',NID_vals'];
 REK_input = [times', REK_vals'];
 
 result = sim(model_name, 'StopTime', num2str(stopTime), 'CaptureErrors', 'on', 'SaveOutput','on');
 
+% get the names of all elements
+% getElementNames(result.logsout)
 % Results: PA, HR, SVO, CO, TPR
-plots = {'PA', 'HR',  'SVO', 'QLO'};
-baseline = [154, 71.72, 0.06878, 4.933];
-% baseline = [100, 72.16, 0.07, 5.053];
+plots = {'REK', 'NID', 'VEC', 'VB', 'QLO', 'PA', 'HR', 'ANC', 'VUD', 'AU'};
+%baseline = [154, 71.72, 0.06878, 4.933];
+%baseline = [100.32, 72.16, 0.0678, 4.89];
+baseline = 100*ones(1, length(plots));
 
-showGraphs(result.logsout, plots, baseline, times(3));
+% showGraphs(result.logsout, plots, baseline, ss);
 
 % save the rsults
-[time, data, header] = getData(result.logsout, false);
+[time, data, header] = getData(result.logsout, ss, plots, false);
 writeToFile([path 'D'], time, data, header);

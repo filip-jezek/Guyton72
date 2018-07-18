@@ -1,7 +1,7 @@
 %% init
 clear;
-close all;
-model_name = 'Guyton72';
+% close all;
+model_name = 'GuytonModel1972_R2018';
 % set the NID input from workspace
 set_param([model_name '/Manual Switch142'], 'sw', '0');
 set_param([model_name '/From Workspace'], 'commented', 'off');
@@ -9,7 +9,7 @@ set_param([model_name '/From Workspace'], 'commented', 'off');
 set_param([model_name '/Manual Switch143'], 'sw', '0');
 set_param([model_name '/From Workspace1'], 'commented', 'off');
 
-path = 'experiments\G72-'
+path = '..\experiments\G72-NASA-'
 
 % default input
 NID_input = [0, 0.1];
