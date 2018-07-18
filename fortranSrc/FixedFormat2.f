@@ -33,29 +33,7 @@ c Hello worslk!
       print *, LVM
       END
       
-      SUBROUTINE FUNCTN(TH,POL,TAB)
-      DIMENSION TAB(14)
-      N=14
-      
-      DO 110 I=1,N,2
-      print *, 'TAB(I) ', TAB(I)
-      print *, 'TH ', TH
-      IF(TAB(I)-TH) 110,120,110
-  110 CONTINUE
-      GO TO 140
-  120 POL=TAB(I+1)
-  130 RETURN
-  140 NN=N-2
-      DO 150 I=1,NN,2
-  150 IF(TAB(I) .LT. TH .AND. TAB(i+2) .GT. TH) GO TO 160
-      WRITE(6, 100) TH
-  100 FORMAT(5x, '*** CURVE LIMITS EXCEEDED * ',G12.6//)
-      IF(TH .LT. TAB(1)) POL=TAB(2)
-      IF(TH .GT. TAB(N-i)) POL=TAB(N)
-      GO TO 130
-  160 POL=TAB(I+1)+(TAB(I+3)-TAB(I+1))*((TH-TAB(I))/(TAB(I+2 )-TAB(I)))
-      GO TO 130
-      END     
+
 
 
       SUBROUTINE FCK (A, B)

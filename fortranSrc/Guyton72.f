@@ -35,397 +35,288 @@ c        INCLUDE 'noDeclarations.inc'
      *  0.0,7.0,30.0,6.25,60.0,3.0,100.0,1.0,160.0,0.15,400.0,0.05,
      *  400.0,0.05/
 
+c     Open the result file:
+      open (102, FILE = 'Guiton72Results.txt', ACTION = 'WRITE')
+      write(102,5)
+      write(6,5)
+    5 FORMAT  (/'GUYTON MODEL FROM WHITE'/
+     *   '   REFER TO GE-AGS USER GUIDE TIR 741-MED-3017'//)
+      INCLUDE 'ParamsAndStart.inc'
+
+      IF (I .GT. 0.5) I = 0.5
+100   IF(OUT .EQ. 3.0) CALL PUTOUT
+
+      T = T+I2
+      CALL HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
+     *          CN2,CN3,CN7,CV ,DAS,DLA,DPA,DRA,DVS,FIS,HMD,HPL,
+     *          HPR,HSL,HSR,I2,LVM,PA,PAM,PA2,PC,PGL,PGS,PLA,
+     *          PPA,PP1,PP2,PRA,PR1,PVS,QAO,QLN,QLO,QPO,QRF,QRN,
+     *          QRO,QVO,RAM,RAR,RBF,RPA,RPT,RPV,RSM,RSN,RVG,RVM,
+     *          RVS,U  ,VAE,VAS,VBD,VIM,VLA,VLE,VP,VPA,VPE,VRA,
+     *          VRC,VRE,VVE,VVR,VVS,VV7,VV8,X,FUN1,FUN2,FUN3,
+     *          FUN4)
+
+120   CALL AUTO(AU,AUB,AUC,AUH,AUJ,AUK,AUL,AUM,AUN,AUO,AUP,AUQ,
+     *         AUR,AUS,AUV,AUX,AUZ,AU4,AU6,AU8,A1B,DAU,EXC,EXE,
+     *         EX1,I2,PA,PA1,POQ,POT,P2O,STA,VVR,VV9,Y,Z,Z8,Z12)
+
+      IF(I3.LE.I2)GO TO 168
+      IF(ABS(DAU-AUJ).GT.DA1)GO TO 100
+110   IF(ABS(QAO-QLO).GT.0.2)GO TO 100
+      IF(ABS(QAO-QPO).GT.0.2)GO TO 100
+      IF(ABS(QAO-QRO).GT.0.4)GO TO 100
+
+
+168   CALL HORMON(AM,AMC,AMP,AMR,AMT,AM1,ANM,CKE,PA,Z,FUN7,
+     *AGK,ANC,ANP,ANR,ANT,ANV,ANW,AN1,CNA,CNE,GFN,
+     *I  ,REK)
+
+170   CALL BLOOD(HKM,HM,HMK,I,POT,POY,PO1,PO2,RC1,RC2,RCD,RKC,
+     *           VB,VIB,VIE,VIM,VP,VRC)
+c TODO 180 CALL MUSCLE
+c TODO     CALL AUTORG
+c TODO     CALL ADH
+c TODO     CALL MISC1
+c TODO     CALL HEART
+c TODO     130 CALL CAPMBD
+
+      I=I*1.2+T-T1
+      I1=ABS(VP1/VPD/I)
+      IF(I1.LT.I) I=I1
+      IF(I3+T-T1.LT.I) I=I3+T-T1
+      T=I+T1
+      T1=T
+
+      if(OUT.EQ.4.0) CALL PUTOUT
+
+c TODO 200 CALL PULMON
+c TODO     CALL MISC2
+c TODO 135 CALL PROTEN
+c TODO 142 CALL KIDNEY
+c TODO 160 CALL IONS
+c TODO 140 CALL GELFLD
+      GO TO 100
+
+c TODO how to stop the simulation and close the output file?
+      close(102)
       end program Guyton72
 
-      subroutine SetParamsAndStart
-c     our oun routine with parameter values from word document
-c     ORIGINAL MODEL PARAMETERS & STARTING DATA-REV.doc and corrected
-c     according to APPENDIX B
-            AAR =   31.7222
-            AGK =   0.20000
-            AH  =   3.02806
-            AHC =   1.00911
-            AHK =   7.00000
-            AHM =   1.00039
-            AHY =   0.0194279
-            AHZ =   0.0183110
-            AH1 =   0.0792152
-            AH2 =   1.20009
-            AH4 =   4.99961
-            AH7 =   -.00111689
-            AH8 =   0.000000
-            ALO =   1.00000
-            AM  =   0.993475
-            AMC =   0.992485
-            AMM =   0.994666
-            AMP =   1.01307
-            AMR =   0.980250
-            AMT =   60.0000
-            AM1 =   0.994222
-            AM2 =   0.0168723
-            AM3 =   1.03961
-            AM5 =   19.0455
-            ANC =   0.995995
-            ANM =   1.00303
-            ANP =   0.995531
-            ANR =   0.995531
-            ANT =   15.0000
-            ANU =   1.00303
-            ANV =   0.000300000
-            ANW =   0.000000
-            ANX =   -.0446948
-            ANY =   -.200000
-            ANZ =   0.400000
-            AN1 =   0.995826
-            AN2 =   0.0418318
-            AN3 =   1.10111
-            AN5 =   2.99697
-            AOM =   0.998304
-c     AOM was ACM, var exist
-            APD =   37.6883
-c     APD was APO, var exist
-            ARF =   1.50000
-            ARM =   0.896017
-            AR1 =   0.985931
-            AR2 =   0.929921
-            AR3 =   0.977277
-            AU  =   0.988693
-            AUB =   1.00375
-            AUC =   0.000000
-            AUH =   0.988693
-            AUJ =   0.988693
-            AUK =   0.000500000
-            AUL =   0.210000
-            AUM =   0.990389
-            AUN =   0.000000
-            AUO =   -.0113072
-            AUP =   0.988693
-            AUQ =   1.00000
-            AUR =   0.988693
-            AUS =   1.00000
-            AUV =   0.300000
-            AUX =   3.00000
-            AUY =   0.250000
-            AUZ =   1.00000
-            AU2 =   -.00969967
-            AU4 =   0.0209558
-            AU6 =   0.990300
-            AU8 =   -.00000484984
-            AU9 =   0.840389
-            AVE =   0.997600
-            A1B =   1.01126
-            A1K =   1.00000
-            A2K =   20.0000
-            A3K =   11520.0
-            A4K =   1.00000
-            BFM =   0.994639
-            BFN =   2.95463
-            B1  =   1666.61
-            CCD =   -.00400162
-c     CCD was CCO, var exist
-            CFC =   0.00700000
-            CHY =   4.95104
-            CKE =   4.98957
-            CKI =   142.025
-            CNA =   142.029
-            CNB =   3.02961
-c     CNB was CNS, !!!vars CNB nor CNS are declared, may be CN8 which is
-c     declared but not set???
-            CNE =   9.97039
-            CNR =   139.000
-            CNX =   2.50000
-            CNY =   6.00000
-            CNZ =   1.00000
-            CN2 =   0.0212000
-            CN3 =   0.366284
-            CN7 =   0.200000
-            CPA =   0.632025
-            CPF =   0.000300000
-            CPG =   12.4609
-            CPI =   16.5321
-            CPK =   0.000000160000
-            CPN =   30.1352
-            CPP =   70.1082
-            CPR =   85.0000
-            CP1 =   53.5762
-            CV  =   0.0825000
-            DAS =   -.0125924
-            DAU =   0.988056
-            DA1 =   1.00000
-            DFP =   -.00000000888210
-            DFZ =   0.000000000363798
-            DHM =   0.00554421
-            DLA =   0.000128508
-            DLP =   0.00700026
-            DLZ =   0.00699915
-            DPA =   0.00146389
-            DPC =   0.0532462
-            DPI =   0.0000661090
-            DPL =   0.0531801
-            DPO =   0.00700000
-            DPP =   -.0000674377
-            DPY =   0.0531878
-            DPZ =   0.0529841
-            DOB =   179.681
-            DRA =   0.000716209
-            DSP =   3.00000
-            DVS =   0.0102838
-            EPH =   0.326489
-            EXC =   1.00000
-            EXE =   0.00000
-            EX1 =   3.00000
-            FIS =   0.000000
-            GBL =   0.000000
-            GFN =   0.125130
-            GFR =   0.125130
-            GF1 =   0.125131
-            GE2 =    0.0500000
-c     GE2 was GF2  !!!!GF2 makes sense. GE2 is not declared, GF2 is.
-c     vars are sorted aphabetically
-            GF3 =   1.00525
-            GF4 =   5.00000
-            GLP =   62.0504
-            GPD =   -.0000154896
-            GPR =   143.459
-            GPZ =   0.0000187144
-            GP1 =   0.00325108
-            GP2 =   0.0374288
-            HKM =   0.533330
-            HM  =   40.8241
-            HMD =   1.00000
-            HMK =   90.0000
-            HM1 =   0.408241
-            HPL =   1.00243
-            HPR =   1.00509
-            HR  =   71.7308
-            HSL =   1.00000
-            HSR =   1.00000
-            HYL =   57.0000
-            I   =   0.726600
-            I1  =   670.675
-            I2  =   0.00300000
-            I3  =   20.0000
-            IFP =   9.14784
-            KCD =   0.000115573
-            KCZ =   0.000119019
-            KE  =   75.0493
-            KED =   -.000105172
-            KE1  =  698.539
-            KI  =   3548.53
-            KID =   0.00280000
-            KIE =   0.00915527
-            KIR =   3548.54
-            KN1 =   9.98025
-            KN3 =   0.0351305
-            KOD =   0.00278960
-            LPD =   14.8918
-            LPK =   0.000470000
-            LVM =   0.990411
-            MMO =   59.8982
-            MO2 =   179.695
-            NAE =   2136.30
-            NED =   -.00362377
-            NID =   0.100000
-            NOD =   0.103624
-            NOZ =   0.103915
-            OMM =   60.0000
-            OSA =   0.993753
-            OSV =   0.695877
-            OUT =   3.00000
-            OVA =   202.845
-            OVS =   0.698845
-            O2A =   0.150000
-            O2M =   180.000
-            PA  =   99.7387
-            PAM =   1.00262
-            PAR =   99.7387
-            PA1 =   99.7387
-            PA2 =   100.878
-            PC  =   18.3755
-            PCD =   0.454161
-            PCE =   3.00000
-            PCP =   6.97848
-            PDO =   -.0679865
-            PFI =   0.000298392
-            PFL =   16.0071
-            PGC =   6.11260
-            PGH =   -4.00010
-            PGL =   15.2458
-            PGP =   4.13219
-            PGR =   1.98042
-            PGS =   95.9435
-            PGV =   3.70362
-            PGX =   16.5288
-            PG2 =   -.00922036
-            PIF =   -5.98890
-            PK1 =   2500.00
-            PK2 =   800.000
-            PK3 =   2.00000
-            PLA =   0.117865
-            PLF =   0.000298391
-            PLO =   0.800060
-            PL1 =   20.1179
-            PMC =   6.86006
-            PMO =   8.00240
-            PMP =   4.61073
-            PMS =   7.24995
-            PM1 =   8.00240
-            PM3 =   0.00100000
-            PM4 =   -1.00000
-            PM5 =   122.000
-            POA =   0.929492
-            POB =   0.985898
-            POC =   0.976478
-            POD =   -.237595
-            POE =   0.994561
-            POK =   0.0600000
-            POM =   0.0800000
-            PON =   0.300000
-            POQ =   8.00000
-            POR =   40.0000
-            POS =   12.0541
-c     POS value was 12.051
-            POT =   8.21768
-            POV =   39.7624
-            POY =   0.0000464000
-            POZ =   0.300000
-            PO1 =   8.25000
-            PO2 =   0.237500
-            PPA =   15.3637
-            PPC =   28.0433
-            PPD =   0.00000159315
-            PPI =   -10.0054
-            PPN =   0.00899393
-            PPO =   0.00899208
-            PPR =   0.376523
-            PPZ =   0.00000185170
-            PP1 =   0.399456
-            PP2 =   15.5392
-            PRA =   0.0915550
-            PRM =   -5.01114
-            PRP =   207.711
-            PR1 =   0.0915550
-            PTC =   4.13303
-            PTM =   60.0000
-            PTS =   6.99994
-            PTT =   1.01104
-            PVG =   14.5804
-            PVO =   39.9320
-            PVS =   3.79517
-            P1O =   8.00000
-            P2O =   8.00000
-            QAO =   5.13746
-            QLN =   5.22090
-            QLO =   5.12487
-            QOM =   2400.03
-            QO2 =   2467.77
-            QPO =   5.12500
-            QRF =   0.600000
-            QRN =   5.21973
-            QRO =   5.12646
-            QVO =   5.12718
-            Q1  =   3.94053
-            Q2  =   18.0000
-            Q3  =   1196.32
-            Q5  =   29.2328
-            RAM =   96.3000
-            RAR =   30.5200
-            RBF =   1.18807
-            RCD =   -.000000834661
-            RC1 =   0.0000110200
-            RC2 =   0.0000118547
-            RDO =   554.944
-            REK =   1.00000
-            RFN =   1.18807
-            RKC =   0.00000580000
-            RMO =   59.8937
-            RPA =   1.58222
-            RPT =   2.97457
-            RPV =   1.39235
-            RR  =   83.9500
-            RSM =   96.4606
-            RSN =   32.4723
-            RTP =   19.3962
-            RVG =   0.721443
-            RVM =   0.989118
-            RVS =   2.75684
-            RV1 =   2.73012
-            SR  =   0.500000
-            SRK =   33.0000
-            STA =   0.00000
-            STH =   1.00000
-            SVO =   0.0714458
-            T   =   0.000000
-            TM  =   19160.0
-            TRR =   0.124098
-            TVD =   0.00100536
-            TVZ =   0.00100391
-            T1  =   0.000000
-            U   =   4.00000
-            VAE =   0.354072
-            VAS =   0.849072
-            VB  =   5.00662
-            VBD =   -.00000392832
-            VEC =   15.0413
-            VG  =   11.5125
-            VIB =   3.03328
-            VIC =   24.9852
-            VID =   -.0000120985
-            VIE =   1.53328
-            VIF =   0.553337
-            VIM =   1.01099
-            VIZ =   -.0000400162
-            VGO =   -.000184407
-            VLA =   0.401179
-            VLE =   0.00117865
-            VP  =   2.96271
-            VP1 =   0.0100000
-            VPA =   0.379996
-            VPD =   -.0000205207
-            VPE =   0.0737455
-            VPF =   0.0124944
-            VRA =   0.100458
-            VRC =   2.04391
-            VRE =   0.000457775
-            VTC =   0.00319994
-            VTD =   0.000000124043
-            VTL =   0.00320494
-            VTS =   12.0661
-            VTW =   40.0264
-            VTY =   0.00317912
-            VTZ =   0.00320024
-            VUD =   0.00103115
-            VUZ =   0.00103220
-            VVE =   0.325152
-            VVS =   3.27592
-            VVR =   2.95137
-            VV1 =   0.162576
-            VV2 =   0.150500
-            VV4 =   0.207625
-            VV5 =   0.0000253618
-            VV6 =   0.00000827931
-            VV7 =   0.0120510
-            VV8 =   0.313102
-            VV9 =   3.15900
-            V2D =   0.0200000
-            X   =   10.0000
-            Y   =   1.00000
-            Z   =   1.00000
-            Z1  =   1.00000
-            Z2  =   1.00000
-            Z3  =   4.00000
-            Z4  =   10.0000
-            Z5  =   10.0000
-            Z6  =   5.00000
-            Z7  =   5.00000
-            Z8  =   1.00000
-            Z9  =   0.120000
-            Z10 =   8.25000
-            Z11 =   4.00000
-            Z12 =   1.24000
-            Z13 =   0.625000
-            Z14 =   0.000000
-            Z15 =   0.000000
-            Z16 =   0.000000
-          return
+      subroutine HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
+     *          CN2,CN3,CN7,CV ,DAS,DLA,DPA,DRA,DVS,FIS,HMD,HPL,
+     *          HPR,HSL,HSR,I2,LVM,PA,PAM,PA2,PC,PGL,PGS,PLA,
+     *          PPA,PP1,PP2,PRA,PR1,PVS,QAO,QLN,QLO,QPO,QRF,QRN,
+     *          QRO,QVO,RAM,RAR,RBF,RPA,RPT,RPV,RSM,RSN,RVG,RVM,
+     *          RVS,U  ,VAE,VAS,VBD,VIM,VLA,VLE,VP,VPA,VPE,VRA,
+     *          VRC,VRE,VVE,VVR,VVS,VV7,VV8,X,FUN1,FUN2,FUN3,
+     *          FUN4)
+      DIMENSION FUN1(14),FUN2(14),FUN3(14),FUN4(14)
+      REAL I2,LVM
+C
+C     CIRCULATORY DYNAMICS BLOCK
+C     HEMODYNAMICS
+C
+        VBD=VP+VRC-VVS-VAS-VLA-VPA-VRA
+        VVS=VVS+DVS*I2+VBD*0.3986
+        VPA=VPA+DPA*I2+VBD*0.155
+        VAS=VAS+DAS*I2+VBD*0.261
+        VLA=VLA+DLA*I2+VBD*0.128
+        VRA=VRA+DRA*I2+VBD*0.0574
+        VAE=VAS-0.495
+        PA=VAE/0.00355
+        PAM=100./PA
+        PA2=PA/AUH
+        CALL FUNCTN(PA2,LVM,FUN1)
+        VRE=VRA-0.1
+        PRA=VRE/0.005
+        CALL FUNCTN(PRA,QRN,FUN2)
+        VPE=VPA-0.30625
+        PPA=VPE/0.0048
+        PP1=0.026*PPA
+        IF(PP1.LT.0.)PP1=0.
+        RPA=PP1**(-0.5)
+        PP2=PPA/AUH
+        CALL FUNCTN(PP2,RVM,FUN3)
+        VLE=VLA-0.4
+        PLA=VLE/0.01
+        CALL FUNCTN(PLA,QLN,FUN4)
+        RPV=1./(PLA+20.)/0.0357
+        RPT=RPV+RPA
+        PGL=PPA-PLA
+        QPO=PGL/RPT
+        ANU=ANM
+        IF(ANU.LT.0.8)ANU=0.8
+        VVE=VVS-VVR-(ANU-1.)*ANY
+        VV8=VVE-VV7
+        IF(VV8.LT.0.0001)VV8=0.0001
+        PVS=VV8/CV
+        PR1=PRA
+        IF(PRA.LT.0.)PR1=0.
+        RVG=2.738/PVS
+        QVO=(PVS-PR1)/RVG
+        CN3=CN3+(((PC-17.)*CN7+17.)*CN2-CN3)*0.1
+        AVE=(AUM-1.)*AUY+1.
+        RVS=AVE*(1./CN3)*VIM*((ANU-1.)*ANZ+1.)
+        PGS=PA-PVS
+        RSN=RAR*ARM*ANU*AUM*PAM*VIM+RVS*1.79
+        BFN=PGS/RSN
+        RSM=ANU*VIM*PAM*AUM*AMM*RAM
+        BFM=PGS/RSM
+        QAO=BFN+BFM+RBF+(PA-PRA)*FIS
+        QLO=LVM*QLN*AUH*HSL*HMD*HPL
+        QRO=QRN*((1.-QRF)*AUH*RVM*HSR*HMD*HPR+QRF*QLO/QLN)
+        QPO=QLO+(QPO-QLO)/U
+        QVO=QRO+(QVO-QRO)/X
+        DVS=QAO-QVO
+        DPA=QRO-QPO
+        DAS=QLO-QAO
+        DLA=QPO-QLO
+        DRA=QVO-QRO
+      return
       end
+
+      SUBROUTINE AUTO(AU,AUB,AUC,AUH,AUJ,AUK,AUL,AUM,AUN,AUO,AUP,AUQ,
+     *         AUR,AUS,AUV,AUX,AUZ,AU4,AU6,AU8,A1B,DAU,EXC,EXE,
+     *          EX1,I2,PA,PA1,POQ,POT,P2O,STA,VVR,VV9,Y,Z,Z8,Z12)
+      REAL I2
+c
+c     AUTONOMIC CONTROL BLOCK
+c
+
+c TODO: check the rutine!
+  120   EXE=(8.-P2O)*EX1+(EXC-1.)*Z12
+        POQ=POT
+        IF(POQ.GT.8.)POQ=8.
+        IF(POQ.LT.4.)POQ=4.
+        PA1=PA*POQ/8.-EXE
+        AUC=0.
+        IF(PA1.LT.80.)AUC=0.03*(80-PA1)
+        IF(PA1.LT.40.)AUC=1.2
+        AUB=0.
+        IF(PA1.LT.170.)AUB=0.014286*(170-PA1)
+        IF(PA1.LT.40.)AUB=1.83
+  123   A1B=(AUB-1.)*AUX+1.
+  124   AUN=0.
+        IF(PA1.LT.50.)AUN=0.2*(50.-PA1)
+        IF(PA1.LT.20.)AUN=6.0
+        AU6=A1B-AU4
+        AU8=AUK*(AU6-1.)
+        DAU=DAU+(AUC+AU6+AUN-DAU)/Z/Y
+        AUJ=AUJ+(DAU-AUJ)*I2*6./Z8
+        IF(AUJ.LT.0.)AUJ=0.
+        IF(AUJ-1.)126,127,127
+  126   AU=AUJ**AUZ
+        GO TO 128
+  127   AU=(AUJ-1.)*AUZ+1.
+  128   IF(STA.GT.0.00001)AU=STA
+        AUO=AU-1.
+        AUP=AUO*AUQ+1.
+        AUH=AUO*AUV+1.
+        AUR=AUO*AUS+1.
+        VVR=VV9-AUL*AUP
+        AUM=0.15+0.85*AUP
+      RETURN
+      END
+
+      SUBROUTINE HORMON(AM,AMC,AMP,AMR,AMT,AM1,ANM,CKE,PA,Z,FUN7,
+     *AGK,ANC,ANP,ANR,ANT,ANV,ANW,AN1,CNA,CNE,GFN,
+     *I  ,REK)
+c TODO: check the subrutine
+      DIMENSION FUN7(14)
+      REAL I
+
+c     ****************************************************************
+c
+c     ALDOSTERONE CONTROL BLOCK
+c
+c     ****************************************************************
+  168   AMR=CKE/CNA/0.00352-9.
+        IF(AMR.LT.0.)AMR=0.
+        AM1=AM1+(ANM*AMP*AMR-AM1)/Z
+        AMC=AMC+(AM1-AMC)*(1.-EXP(-I/AMT))
+        AM=20.039-19.8*EXP(-0.0391*AMC)
+c     ****************************************************************
+c
+c     ANGITENSIN CONTROL BLOCK
+c
+c     ****************************************************************
+        CNE=152-CNA
+        IF(CNE.LT.1.)CNE=1.
+        ANR=((17.75-GFN*CNA)*AGK+1.)*REK
+        ANW=ANW+((ANR-1.)*10.-ANW)*ANV*I
+        IF(ANW.LT.0.)ANW=0.
+        ANP=ANR+ANW
+        IF(ANP.GT.100.)ANP=100.
+        IF(ANP.LT.0.01)ANP=0.01
+        AN1=AN1+(ANP-AN1)/Z
+        ANC=ANC+(AN1-ANC)*(1.-EXP(-I/ANT))
+        ANM=4.0-3.3*EXP(-0.0967*ANC)
+        IF(ANM.LT.0.7)ANM=0.7
+      RETURN
+      END
+
+      SUBROUTINE BLOOD(HKM,HM,HMK,I,POT,POY,PO1,PO2,RC1,RC2,RCD,RKC,
+     *           VB,VIB,VIE,VIM,VP,VRC)
+        REAL I
+c TODO: check the rutine
+
+c
+c     RED CELLS AND VISCOSITY BLOCK
+c----------------------------------------------------------------------
+c     BLOOD VISCOSITY
+c----------------------------------------------------------------------
+  170   VB=VP+VRC
+        HM=100.*VRC/VB
+        VIE=HM/(HMK-HM)/HKM
+        VIB=VIE+1.5
+        VIM=0.3333*VIB
+        RC2=RKC*VRC
+        PO2=PO1-POT
+        IF(PO2.LT.0.2375)PO2=0.2375
+        RC1=POY*PO2
+        RCD=RC1-RC2
+        VRC=VRC+RCD*I
+      RETURN
+      END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      SUBROUTINE FUNCTN(TH,POL,TAB)
+        DIMENSION TAB(14)
+        N=14
+        DO 110 I=1,N,2
+        IF(TAB(I)-TH) 110,120,110
+  110   CONTINUE
+        GO TO 140
+  120   POL=TAB(I+1)
+  130   RETURN
+  140   NN=N-2
+        DO 150 I=1,NN,2
+  150   IF(TAB(I) .LT. TH .AND. TAB(i+2) .GT. TH) GO TO 160
+        WRITE(6, 100) TH
+  100   FORMAT(5x, '*** CURVE LIMITS EXCEEDED * ',G12.6//)
+        IF(TH .LT. TAB(1)) POL=TAB(2)
+        IF(TH .GT. TAB(N-1)) POL=TAB(N)
+        GO TO 130
+  160   POL=TAB(I+1)+(TAB(I+3)-TAB(I+1))*((TH-TAB(I))/(TAB(I+2 )-
+     *  TAB(I)))
+        GO TO 130
+      END
+
+      subroutine PUTOUT
+
+        return
+      end
+

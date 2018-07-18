@@ -1,6 +1,6 @@
-c     to be included when debuging
+c     to be included during implementation
       implicit none
-      REAL T,VBD,VVS,VPA,VAS,VLA,VRA,VAE,PA,PAM,LVM,
+      REAL T,VBD,VVS,VPA,VAS,VLA,VRA,VAE,PA,PAM,
      *     VRE,PRA,QRN,VPE,PPA,PP1,CPA,RPA,RVM,VLE,PLA,QLN,PL1,
      *     A1B,RPV,RPT,PGL,QPO,Q5 ,VVE,VV8,PVS,PGV,RVG,QVO,AVE
 c     Is QPO and QVO correct above? O is not clear. Var exists.
@@ -10,7 +10,7 @@ c     Is QPO and QVO correct above? O is not clear. Var exists.
       REAL PC ,PCD,VTC,PLD,VTL,VTD,VPD,DPL,CP1,DPC,DPI,DLP,
      *     DPP,CHY,PRM,PGR,CPG,PGP,GF1,PGX,PGC,PGH,PG2,VGD,VG ,
      *     EPH,GP1,GP2,GPD,AAR,RR ,RFN,APD,GLP,PFL,GFR,TRR,VUD
-      REAL REK,VEC,CKE,CKI
+      REAL REK,VEC,CKE,CKI,
      *     CNA,CCD,VID, VIC,VTY,z  ,VTZ,VUZ,TVZ,PPZ,
      *     DFZ,X  ,PR1,VTS,VP ,PRP,GPR,AMR,AMP
 c     Is CKI correct? C is not clear, may be O or 0 also. Var exists.
@@ -18,7 +18,7 @@ c     Is CKI correct? C is not clear, may be O or 0 also. Var exists.
      *     AN5,ANM,VB ,HM1,HM ,B1 ,VIE,VIB,VIM,RC2,PO2,RKC,RC1,
      *     RCD,VRC,RSN,OVA,BFN,DOB,AOM,P1O,OSV,POT,POD,POB,AR1
 C     Is DOB correct? Could be also DO8. Var exists.
-      REAL AR2,POC,AR3,ARM,CN8,GFN,AH7,AH8,AH ,AHC,AH1,AH2,AH4,
+      REAL AR2,POC,AR3,ARM,CNB,GFN,AH7,AH8,AH ,AHC,AH1,AH2,AH4,
      *     AHM,CNY,CNX,VV1,VV2,VV5,VV6,VV7,TVD,VTW,HSR,HSL,
      *     SR ,VVR,RAR,CV ,CN7,AUX,AUK,AUZ,Y  ,CFC,CPK,PCE,CPR
       REAL DPO,HYL,AMT,ANT,POK,PON,A1K,A2K,A3K,CNR,CNZ,
@@ -35,8 +35,10 @@ C     Is DOB correct? Could be also DO8. Var exists.
      *     AUS,A378,DUMMY(22),TITLE(400),DUMNY(40)
       REAL NDUMY(22),DMMY
       REAL FUN1(14),FUN2(14),FUN3(14),FUN4(14),FUN6(14),FUN7(14)
+c     additional declarations:
+      REAL PTM
 
-        REAL LVMI,I,IFP,LPD,KE,KE1,KOD,KIR,KIE,KI,KCD,KED,KN1,KN3
+        REAL LVM,I,IFP,LPD,KE,KE1,KOD,KIR,KIE,KI,KCD,KED,KN1,KN3
         REAL NAE,NED,NID,NOD,I1,LPK,KID,MO2,NOZ,KCZ,HPL,HPR,I2,I3,MMO
 c        DIMENSION FUN1(14),FUN2(14),FUN3(14),FUN4(14),FUN6(14),FUN7(14)
         COMMON/ARRAY/T,I,VBD,VVS,VPA,VAS,VLA,VRA,VAE,PA,PAM,LVM,
@@ -49,7 +51,7 @@ c     Is QPO and QVO correct above? O is not clear. Var exists.
        COMMON/ARRAY/PC ,PCD,VTC,PLD,VTL,VTD,VPD,DPL,CP1,DPC,DPI,LPD,DLP,
      *              DPP,CHY,PRM,PGR,CPG,PGP,GF1,PGX,PGC,PGH,PG2,VGD,VG ,
      *              EPH,GP1,GP2,GPD,AAR,RR ,RFN,APD,GLP,PFL,GFR,TRR,VUD
-       COMMON/ARRAY/REK,NOD,NED,NAE,VEC,CKE,KOD,KE1,KIR,KIE,KCD,KED,CKI
+       COMMON/ARRAY/REK,NOD,NED,NAE,VEC,CKE,KOD,KE1,KIR,KIE,KCD,KED,CKI,
      *              CNA,CCD,VID,KE ,KI ,VIC,I1 ,VTY,z  ,VTZ,VUZ,TVZ,PPZ,
      *              DFZ,X  ,I2 ,PR1,VTS,VP ,PRP,IFP,GPR,KN3,KN1,AMR,AMP
 c     Is CKI correct? C is not clear, may be O or 0 also. Var exists.
@@ -57,7 +59,7 @@ c     Is CKI correct? C is not clear, may be O or 0 also. Var exists.
      *              AN5,ANM,VB ,HM1,HM ,B1 ,VIE,VIB,VIM,RC2,PO2,RKC,RC1,
      *              RCD,VRC,RSN,OVA,BFN,DOB,AOM,P1O,OSV,POT,POD,POB,AR1
 C     Is DOB correct? Could be also DO8. Var exists.
-       COMMON/ARRAY/AR2,POC,AR3,ARM,CN8,GFN,AH7,AH8,AH ,AHC,AH1,AH2,AH4,
+       COMMON/ARRAY/AR2,POC,AR3,ARM,CNB,GFN,AH7,AH8,AH ,AHC,AH1,AH2,AH4,
      *              AHM,CNY,CNX,VV1,VV2,VV5,VV6,VV7,TVD,VTW,HSR,HSL,NID,
      *              SR ,VVR,RAR,CV ,CN7,AUX,AUK,AUZ,Y  ,CFC,CPK,PCE,CPR
        COMMON/ARRAY/LPK,DPO,HYL,KID,AMT,ANT,POK,PON,A1K,A2K,A3K,CNR,CNZ,
