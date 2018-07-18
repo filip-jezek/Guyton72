@@ -1,6 +1,46 @@
       program Guyton72
-          implicit none
-          subroutine SetParamsAndStart
+c       R67093,8 LARRY NEAL--MATHJ NASA FILE
+c
+c       PROGRAM GUYTON
+c       CIRCULATORY DYNAMICS - CIRCE
+c       CIRCEI
+
+c       include when during implementation to check types and whether
+c       variables are declared to avid typos:
+        INCLUDE 'declarations.inc'
+c       include finally:
+c        INCLUDE 'noDeclarations.inc'
+        DATA FUN1(1),FUN1(2),FUN1(3),FUN1(4),FUN1(5),FUN1(6),FUN1(7),
+     *  FUN1(8),FUN1(9),FUN1(10),FUN1(11),FUN1(12),FUN1(13),FUN1(14)/
+     *  0.0,1.04,60.0,1.025,125.0,0.97,160.0,0.88,200.0,0.59,240.0,
+     *  0.0,240.0,0.0/
+        DATA FUN2(1),FUN2(2),FUN2(3),FUN2(4),FUN2(5),FUN2(6),FUN2(7),
+     *  FUN2(8),FUN2(9),FUN2(10),FUN2(11),FUN2(12),FUN2(13),FUN2(14)/
+     *  -100.0,0.0,-6.0,0.0,-3.0,0.75,-1.0,2.6,2.0,9.8,8.0,13.5,1000.0,
+     *  13.5/
+        DATA FUN3(1),FUN3(2),FUN3(3),FUN3(4),FUN3(5),FUN3(6),FUN3(7),
+     *  FUN3(8),FUN3(9),FUN3(10),FUN3(11),FUN3(12),FUN3(13),FUN3(14)/
+     *  0.0,1.06,20.0,0.97,24.0,0.93,30.0,0.8,38.0,0.46,45.0,0.0,45.0,
+     *  0.0/
+        DATA FUN4(1),FUN4(2),FUN4(3),FUN4(4),FUN4(5),FUN4(6),FUN4(7),
+     *  FUN4(8),FUN4(9),FUN4(10),FUN4(11),FUN4(12),FUN4(13),FUN4(14)/
+     *  -100.0,0.0,-4.0,0.0,-1.0,3.6,3.0,9.4,6.0,11.6,10.0,13.5,
+     *  1000.0,13.5/
+        DATA FUN6(1),FUN6(2),FUN6(3),FUN6(4),FUN6(5),FUN6(6),FUN6(7),
+     *  FUN6(8),FUN6(9),FUN6(10),FUN6(11),FUN6(12),FUN6(13),FUN6(14)/
+     *  -100.0,10000.0,0.0,70.0,0.4,9.3,0.8,3.3,1.2,1.3,1.6,0.43,100.0,
+     *  0.0/
+        DATA FUN7(1),FUN7(2),FUN7(3),FUN7(4),FUN7(5),FUN7(6),FUN7(7),
+     *  FUN7(8),FUN7(9),FUN7(10),FUN7(11),FUN7(12),FUN7(13),FUN7(14)/
+     *  0.0,7.0,30.0,6.25,60.0,3.0,100.0,1.0,160.0,0.15,400.0,0.05,
+     *  400.0,0.05/
+
+      end program Guyton72
+
+      subroutine SetParamsAndStart
+c     our oun routine with parameter values from word document
+c     ORIGINAL MODEL PARAMETERS & STARTING DATA-REV.doc and corrected
+c     according to APPENDIX B
             AAR =   31.7222
             AGK =   0.20000
             AH  =   3.02806
@@ -40,8 +80,10 @@
             AN2 =   0.0418318
             AN3 =   1.10111
             AN5 =   2.99697
-            AOM =   0.998304        #bylo ACM
-            APD =   37.6883         #bylo APO
+            AOM =   0.998304
+c     AOM was ACM, var exist
+            APD =   37.6883
+c     APD was APO, var exist
             ARF =   1.50000
             ARM =   0.896017
             AR1 =   0.985931
@@ -79,13 +121,16 @@
             BFM =   0.994639
             BFN =   2.95463
             B1  =   1666.61
-            CCD =   -.00400162      #bylo CCO
+            CCD =   -.00400162
+c     CCD was CCO, var exist
             CFC =   0.00700000
             CHY =   4.95104
             CKE =   4.98957
             CKI =   142.025
             CNA =   142.029
-            CNB =   3.02961         #bylo CNS
+            CNB =   3.02961
+c     CNB was CNS, !!!vars CNB nor CNS are declared, may be CN8 which is
+c     declared but not set???
             CNE =   9.97039
             CNR =   139.000
             CNX =   2.50000
@@ -134,7 +179,9 @@
             GFN =   0.125130
             GFR =   0.125130
             GF1 =   0.125131
-            GE2 =    0.0500000      #bylo GF2  !!!!GF2 dává smysl, je to podle abecedy
+            GE2 =    0.0500000
+c     GE2 was GF2  !!!!GF2 makes sense. GE2 is not declared, GF2 is.
+c     vars are sorted aphabetically
             GF3 =   1.00525
             GF4 =   5.00000
             GLP =   62.0504
@@ -236,7 +283,8 @@
             PON =   0.300000
             POQ =   8.00000
             POR =   40.0000
-            POS =   12.0541         #bylo 12.051
+            POS =   12.0541
+c     POS value was 12.051
             POT =   8.21768
             POV =   39.7624
             POY =   0.0000464000
@@ -380,5 +428,4 @@
             Z15 =   0.000000
             Z16 =   0.000000
           return
-          end
-      end program Guyton72
+      end

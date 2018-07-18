@@ -1,4 +1,4 @@
-      PROGRAM WTF2
+      SUBROUTINE WTF2()
       REAL LVM
       dimension FUN1(14)
 c      DATA FUN1(1),FUN1(2),FUN1(3),FUN1(4),FUN1(5),FUN1(6),FUN1(7), 
