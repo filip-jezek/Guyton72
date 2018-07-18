@@ -1,7 +1,7 @@
 % protocol_D - salt loading experiment according to the NASA report
 
 % when the steady state is reached
-ss = 2e6; 
+ss = 1e4; 
 % ss = 2e4; 
 % times = [initial, steady state, REK, NID, final]
 times = [0, ss, ss + 2*60, ss + 60*96];
@@ -22,7 +22,7 @@ plots = {'REK', 'NID', 'VEC', 'VB', 'QLO', 'PA', 'HR', 'ANC', 'VUD', 'AU'};
 %baseline = [100.32, 72.16, 0.0678, 4.89];
 baseline = 100*ones(1, length(plots));
 
-% showGraphs(result.logsout, plots, baseline, ss);
+showGraphs(result.logsout, plots, baseline, 0);
 
 % save the rsults
 [time, data, header] = getData(result.logsout, ss, plots, false);
