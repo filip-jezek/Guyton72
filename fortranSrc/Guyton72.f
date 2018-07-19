@@ -73,12 +73,28 @@ c     Open the result file:
 
 170   CALL BLOOD(HKM,HM,HMK,I,POT,POY,PO1,PO2,RC1,RC2,RCD,RKC,
      *           VB,VIB,VIE,VIM,VP,VRC)
-c TODO 180 CALL MUSCLE
-c TODO     CALL AUTORG
-c TODO     CALL ADH
-c TODO     CALL MISC1
-c TODO     CALL HEART
-c TODO     130 CALL CAPMBD
+
+180   CALL MUSCLE(ALO,AMM,AOM,AUP,A4K,BFM,EXC,HM,I,MMO,OMM,OSA,
+     *             OVA,OVS,O2A,PDO,PK1,PK2,PK3,PMO,PM1,PM3,PM4,PM5,
+     *              POE,POM,PVO,P2O,QOM,RMO,VPF,Z5,Z6)
+
+      CALL AUTORG(AOM,ARM,AR1,AR2,AR3,A1K,A2K,A3K,BFN,DOB,HM,I,
+     *             MO2,OSV,OVA,O2M,POA,POB,POC,POD,POK,PON,POR,POT,
+     *             POV,POZ,P1O,QO2,RDO,Z,Z4,Z7)
+
+
+      CALL ADH(AH,AHC,AHK,AHM,AHY,AHZ,AH7,AH8,AUP,CNA,CNB,CNR,
+     *       CNZ,I,PRA,Z)
+
+      CALL MISC1(AHM,AU4,AU8,I,SR,SRK,STH,TVD,TVZ,VEC,VIC,VTW,
+     *         VVE,VV6,VV7,Z )
+
+      CALL HEART(AUR,DHM,HMD,HR,I,PA,PMC,PMP,PMS,POT,PRA,QAO,
+     *           QLO,RTP,SVO,VAE,VLE,VPE,VRE,VVE)
+
+      CALL CAPMBD(BFN,CFC,CPI,CPP,DFP,I,IFP,PC,PCD,PIF,PLD,PPC,
+     *              PRP,PTC,PTS,PTT,PVG,PVS,RVS,TVD,VG,VID,VIF,VP,
+     *              VPD,VTC,VTD,VTL,VTS,VUD,Z,Z1,FUN6)
 
       I=I*1.2+T-T1
       I1=ABS(VP1/VPD/I)
@@ -89,12 +105,24 @@ c TODO     130 CALL CAPMBD
 
       if(OUT.EQ.4.0) CALL PUTOUT
 
-c TODO 200 CALL PULMON
-c TODO     CALL MISC2
-c TODO 135 CALL PROTEN
-c TODO 142 CALL KIDNEY
-c TODO 160 CALL IONS
-c TODO 140 CALL GELFLD
+  200 CALL PULMON(CPF,CPP,CPN,DFP,I,PCP,PFI,PLA,PLF,POS,PPA,PPC,
+     *              PPD,PPI,PPN,PPO,PPR,VP,VPD,VPF,Z,Z3)
+
+      CALL MISC2(HPL,HPR,HSL,HSR,I,PA,PPA,POT,STH,Z10,Z11,Z13)
+
+  135 CALL PROTEN(CHY,CPG,CPI,CPK,CPP,CPR,CP1,DLP,DLZ,DPC,DPI,DPL,
+     *            DPO,DPY,GPD,GPR,I,IFP,LPK,PC,PCE,PGX,PRP,VG,
+     *            VTL,Z,PPD)
+
+  142 CALL KIDNEY(AAR,AHM,AM,APD,ARF,AUM,CNE,CNX,CNY,GBL,GFN,GFR,
+     *            GF2,GF3,GF4,GLP,I,NAE,NED,NID,NOD,NOZ,PA,PAR,PFL,
+     *            PPC,RBF,REK,RFN,RR,STH,TRR,VIM,VUD,Z)
+
+  160 CALL IONS(AM,CCD,CKE,CKI,CNA,I,KCD,KE,KED,KI,KID,KIE,
+     *          KIR,KOD,NAE,REK,VEC,VIC,VID,VP,VPF,VTS,Z)
+
+  140 CALL GELFLD(CHY,CPG,CPI,GPR,HYL,IFP,PGC,PGH,PGP,PGR,PGX,PIF,
+     *       PRM,PTC,PTS,PTT,VG,VGD,VIF,VTS,V2D,FUN6)
       GO TO 100
 
 c TODO how to stop the simulation and close the output file?
@@ -279,14 +307,271 @@ c----------------------------------------------------------------------
       END
 
 
+      SUBROUTINE MUSCLE(ALO,AMM,AOM,AUP,A4K,BFM,EXC,HM,I,MMO,OMM,OSA,
+     *             OVA,OVS,O2A,PDO,PK1,PK2,PK3,PMO,PM1,PM3,PM4,PM5,
+     *             POE,POM,PVO,P2O,QOM,RMO,VPF,Z5,Z6)
+c     TODO: check rutine
+        REAL I,MMO
+  180   OSA=ALO-VPF*0.5
+        OVA=OSA*HM*5.
+        OVS=OVS+((BFM*OVA-RMO)/HM/5./BFM-OVS)/Z6
+        PVO=57.14*OVS
+        RMO=(PVO-PMO)*PM5/(PM1**PK3-PM4)
+        QOM=QOM+(RMO-MMO)*(1.-EXP(-I/Z5))
+        PMO=PK2/(PK1-QOM)
+        PM1=PMO
+        IF(PM1.LT.PM3)PM1=PM3
+        P2O=PMO
+        IF(P2O.GT.8.)P2O=8.
+        AOM=(AUP-1.)*O2A+1.
+        MMO=AOM*OMM*EXC*(1.-(8.0001-P2O)**3./512.)
+        PDO=PVO-40.
+        POE=POM*PDO+1.
+        IF(POE.LT.0.005)POE=0.005
+        AMM=AMM+(POE-AMM)*(1.-EXP(-I/A4K))
+      RETURN
+      END
+
+
+      SUBROUTINE AUTORG(AOM,ARM,AR1,AR2,AR3,A1K,A2K,A3K,BFN,DOB,HM,I,
+     *             MO2,OSV,OVA,O2M,POA,POB,POC,POD,POK,PON,POR,POT,
+     *             POV,POZ,P1O,QO2,RDO,Z,Z4,Z7)
+c TODO:check rutine
+        REAL I,MO2
+        OSV=OSV+((BFN*OVA-DOB)/HM/5./BFN-OSV)/Z7
+        POV=OSV*57.14
+        RDO=POT**3.
+        IF(RDO.LT.50.)RDO=50.
+        DOB=(POV-POT)*3161./RDO
+        MO2=AOM*O2M*(1.-(8.0001-P1O)**3./512.)
+        QO2=QO2+(DOB-MO2)*(1.-EXP(-I/Z4))
+        POT=QO2*0.00333
+        P1O=POT
+        IF(POT.GT.8.)P1O=8.
+        POD=POV-POR
+        POB=POB+(POB-AR1)*(1.-EXP(-I/A1K))
+        ARM=AR1*AR2*AR3
+        POA=POA+(PON*POD+1.-POA)/Z
+        IF(POA.LT.0.5)POA=0.5
+        AR2=AR2+(POA-AR2)*(1.-EXP(-I/A1K))
+c   in previous line was A2K instead of A1K
+        IF(POD)194,192,192
+  192   POC=POZ*POD+1.
+        GO TO 196
+  194   POC=POZ*POD*0.33+1.
+  196   IF(POC.LT.0.3)POC=0.3
+        AR3=AR3+(POC-AR3)*I/A3K
+      RETURN
+      END
+
+      SUBROUTINE ADH(AH,AHC,AHK,AHM,AHY,AHZ,AH7,AH8,AUP,CNA,CNB,CNR,
+     *       CNZ,I,PRA,Z)
+c TODO:check rutine
+        REAL I
+        CNB=CNA-CNR
+        AHZ=0.2*PRA
+        AHY=AHY+(AHZ-AHY)*0.0007*I
+        AH8=AUP-1.
+        IF(AH8.LT.0.)AH8=0.
+        IF(CNB.LT.0.)CNB=0.
+        AH=AH+(CNZ*CNB+AH8-AHZ+AHY-AH)/Z
+        IF(AH.LT.0.)AH=0.
+        AHC=AHC+(0.3333*AH-AHC)*(1.-EXP(-I/AHK))
+        AHM=6.*(1.-EXP(-0.1808*AHC))
+        IF(AHM.LT.0.3)AHM=0.3
+      RETURN
+      END
+
+      SUBROUTINE MISC1(AHM,AU4,AU8,I,SR,SRK,STH,TVD,TVZ,VEC,VIC,VTW,
+     *         VVE,VV6,VV7,Z )
+c TODO:check rutine
+        REAL I
+        VV6=VV6+(SR*(VVE-0.301)-VV7-VV6)/Z
+        VV7=VV7+VV6*(1.-EXP(-I/SRK))
+        TVZ=(0.01*AHM-0.009)*STH
+        TVD=TVD+(TVZ-TVD)/Z
+        IF(TVD.LT.0.)TVD=0.
+        VTW=VIC+VEC
+        AU4=AU4+AU8*I
+      RETURN
+      END
+
+      SUBROUTINE HEART(AUR,DHM,HMD,HR,I,PA,PMC,PMP,PMS,POT,PRA,QAO,
+     *           QLO,RTP,SVO,VAE,VLE,VPE,VRE,VVE)
+c TODO:check rutine
+        REAL I
+        DHM=(POT-6.)*0.0025
+        HMD=HMD+DHM*I
+        IF(HMD.GT.1.)HMD=1.
+        PMC=(VAE+VVE+VRE+VPE+VLE)/0.11
+        PMS=(VAE+VVE+VRE)/0.09375
+        PMP=(VPE+VLE)/0.01625
+        HR=(32.+40.*AUR+PRA*2.)*((HMD-1.)*0.5+1.)
+        RTP=(PA-PRA)/QAO
+        SVO=QLO/HR
+      RETURN
+      END
+
+
+      SUBROUTINE CAPMBD(BFN,CFC,CPI,CPP,DFP,I,IFP,PC,PCD,PIF,PLD,PPC,
+     *              PRP,PTC,PTS,PTT,PVG,PVS,RVS,TVD,VG,VID,VIF,VP,
+     *              VPD,VTC,VTD,VTL,VTS,VUD,Z,Z1,FUN6)
+c TODO:check rutine
+        REAL I,IFP
+  130   PTT=(VTS/12.)**2
+        VIF=VTS-VG
+        CALL FUNCTN(VIF,PTS,FUN6)
+        PIF=PTT-PTS
+        CPI=IFP/VIF
+        PTC=0.25*CPI
+        CPP=PRP/VP
+        PPC=0.4*CPP
+        PVG=RVS*1.79*BFN
+        PC=PVG+PVS
+        PCD=PC+PTC-PPC-PIF
+        VTC=VTC+(CFC*PCD-VTC)/Z
+        PLD=7.8+PIF-PTT
+        VTL=VTL+(0.004*PLD-VTL)/Z
+        IF(VTL.LT.0.)VTL=0.
+        VTD=VTC-VTL-VID
+        VTS=VTS+VTD*I
+        VPD=VPD+(TVD-VTC+VTL-VUD-DFP-VPD)/Z1
+      RETURN
+      END
+
+      SUBROUTINE PULMON(CPF,CPP,CPN,DFP,I,PCP,PFI,PLA,PLF,POS,PPA,PPC,
+     *              PPD,PPI,PPN,PPO,PPR,VP,VPD,VPF,Z,Z3)
+c TODO:check rutine
+        REAL I
+        VP=VP+(VPD*I)/Z3
+  200   PCP=0.45*PPA+0.55*PLA
+        PPI=2.-0.150/VPF
+        CPN=PPR/VPF
+        POS=CPN*0.4
+        PLF=(PPI+11.)*0.0003
+        PPO=PLF*CPN
+        PPN=(CPP-CPN)*0.000225
+        PPD=PPD+(PPN-PPO-PPD)/Z
+        IF(PPR+PPD*I-0.025.LT.0.)PPD=(0.025-PPR)/I
+        PFI=(PCP-PPI+POS-PPC)*CPF
+        DFP=DFP+(PFI-PLF-DFP)/Z
+        IF(VPF+DFP*I-0.001.LT.0.)DFP=(0.001-VPF)/I
+        VPF=VPF+DFP*I
+        PPR=PPR+PPD*I
+      RETURN
+      END
+
+      SUBROUTINE MISC2(HPL,HPR,HSL,HSR,I,PA,PPA,POT,STH,Z10,Z11,Z13)
+c TODO:check rutine
+        REAL I
+        HPL=HPL+(((PA/100./HSL)**Z13)-HPL)*I/57600.
+        HPR=HPR+(((PPA/15./HSR)**Z13)-HPR)*I/57600.
+c second right parenthesis was missing
+        STH=(Z10-POT)*Z11
+        IF(STH.LT.1.)STH=1.
+        IF(STH.GT.8.)STH=8.
+      RETURN
+      END
+
+      SUBROUTINE PROTEN(CHY,CPG,CPI,CPK,CPP,CPR,CP1,DLP,DLZ,DPC,DPI,DPL,
+     *            DPO,DPY,GPD,GPR,I,IFP,LPK,PC,PCE,PGX,PRP,VG,
+     *            VTL,Z,PPD)
+c in word there was passed dpp in adition, ppd was in different position
+c TODO:check rutine
+        REAL I,IFP,LPK
+  135   DPL=DPL+(VTL*CPI-DPL)/Z
+        IF(PC.LT.0.)PC=0.
+        DPC=DPC+(CPK*(CPP-CPI)*PC**PCE-DPC)/Z
+        DPI=DPC-DPL
+        DLZ=LPK*(CPR-CPP)
+        IF(CPP.GT.CPR)DLZ=4.*DLZ
+        DLP=DLP+(DLZ-DLP)/Z
+        PRP=PRP+(DLP-DPO+DPL-DPC-PPD)*I
+  141   PGX=CHY**2*0.01332*CPG+CPG
+        GPD=GPD+(0.0005*(CPI-PGX)*VG-GPD)/Z
+        GPR=GPR+GPD*I
+        IFP=IFP+(DPI-GPD)*I
+      RETURN
+      END
+
+
+      SUBROUTINE KIDNEY(AAR,AHM,AM,APD,ARF,AUM,CNE,CNX,CNY,GBL,GFN,GFR,
+     *            GF2,GF3,GF4,GLP,I,NAE,NED,NID,NOD,NOZ,PA,PAR,PFL,
+     *            PPC,RBF,REK,RFN,RR,STH,TRR,VIM,VUD,Z)
+c TODO:check rutine
+        REAL I,NAE,NED,NID,NOD,NOZ
+  142   GF3=((GFN/0.125-1.)*GF4)+1.
+        IF(GF3.GT.15.)GF3=15.
+        IF(GF3.LT.0.4)GF3=0.4
+        AAR=31.67*VIM*(AUM*ARF+1.-ARF)*GF3
+        RR=AAR+51.66*VIM
+        PAR=PA-GBL
+        RFN=PAR/RR
+        RBF=REK*RFN
+  150   APD=AAR*RFN
+        GLP=PAR-APD
+        PFL=GLP-PPC-18.
+        GF1=GFN
+        GFN=GFN+(PFL*0.00781-GFN)*GF2/Z
+        IF(ABS(GFN-GF1).GT.0.002)GO TO 142
+        GFR=GFN*REK
+        TRR=0.8*GFR+0.025*REK-0.001*REK/AM/AHM
+        VUD=VUD+(GFR-TRR-VUD)/Z
+        IF(VUD.LT.0.0002)VUD=0.0002
+        NOZ=1000.*VUD/AM/(CNE/CNX+CNY)
+        NOD=NOD+(NOZ-NOD)/Z
+        NED=NID*STH-NOD
+        NAE=NAE+NED*I
+      RETURN
+      END
 
 
 
+      SUBROUTINE IONS(AM,CCD,CKE,CKI,CNA,I,KCD,KE,KED,KI,KID,KIE,
+     *                KIR,KOD,NAE,REK,VEC,VIC,VID,VP,VPF,VTS,Z)
+c TODO:check rutine
+        REAL I,KCD,KE,KED,KI,KID,KIE,KIR,KOD,NAE
+  160   VEC=VTS+VP+VPF
+        CKE=KE/VEC
+        KOD=(0.00042*CKE+0.001*AM*CKE)*REK
+        KIR=2850.+140.*CKE
+        KIE=KIR-KI
+        KCD=KCD+(KIE*0.013-KCD)/Z
+        KI=KI+KCD*I
+        KED=KID-KCD-KOD
+        KE=KE+KED*I
+        CKI=KI/VIC
+        CNA=NAE/VEC
+        CCD=CKI-CNA
+        VID=VID+(0.01*CCD-VID)/Z
+        VIC=VIC+VID*I
+      RETURN
+      END
 
 
-
-
-
+      SUBROUTINE GELFLD(CHY,CPG,CPI,GPR,HYL,IFP,PGC,PGH,PGP,PGR,PGX,PIF,
+     *       PRM,PTC,PTS,PTT,VG,VGD,VIF,VTS,V2D,FUN6)
+c VRS was passed but has is not declared and is not used
+c TODO:check rutine
+        REAL IFP
+  140   CHY=HYL/VG
+        PRM=-5.9*CHY+24.2
+        PGR=0.4*CHY
+        CPG=GPR/VG
+        PGP=0.25*PGX
+        PGC=PGP+PGR
+        VIF=VTS-VG
+        CALL FUNCTN(VIF,PTS,FUN6)
+        PIF=PTT-PTS
+        CPI=IFP/VIF
+        PTC=0.25*CPI
+        PGH=PIF+PTS+PRM
+        VGD=V2D*(PIF+PGC-PTC-PGH)
+        VG=VG+VGD
+        IF(VG.LT.0.)VG=0.
+        IF(0.012.LT.ABS(VGD))GO TO 140
+      RETURN
+      END
 
 
 
