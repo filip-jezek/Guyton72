@@ -210,7 +210,6 @@ c
 c     AUTONOMIC CONTROL BLOCK
 c
 
-c TODO: check the rutine!
   120   EXE=(8.-P2O)*EX1+(EXC-1.)*Z12
         POQ=POT
         IF(POQ.GT.8.)POQ=8.
@@ -220,7 +219,8 @@ c TODO: check the rutine!
         IF(PA1.LT.80.)AUC=0.03*(80-PA1)
         IF(PA1.LT.40.)AUC=1.2
         AUB=0.
-        IF(PA1.LT.170.)AUB=0.014286*(170-PA1)
+        IF(PA1.LT.170.)AUB=0.014286*(170.0-PA1)
+c 170 -> 170.0
         IF(PA1.LT.40.)AUB=1.83
   123   A1B=(AUB-1.)*AUX+1.
   124   AUN=0.
@@ -248,7 +248,6 @@ c TODO: check the rutine!
       SUBROUTINE HORMON(AM,AMC,AMP,AMR,AMT,AM1,ANM,CKE,PA,Z,FUN7,
      *AGK,ANC,ANP,ANR,ANT,ANV,ANW,AN1,CNA,CNE,GFN,
      *I  ,REK)
-c TODO: check the subrutine
       DIMENSION FUN7(14)
       REAL I
 
@@ -259,6 +258,8 @@ c
 c     ****************************************************************
   168   AMR=CKE/CNA/0.00352-9.
         IF(AMR.LT.0.)AMR=0.
+        CALL FUNCTN(PA,AMP,FUN7)
+c the call above was missing
         AM1=AM1+(ANM*AMP*AMR-AM1)/Z
         AMC=AMC+(AM1-AMC)*(1.-EXP(-I/AMT))
         AM=20.039-19.8*EXP(-0.0391*AMC)
@@ -267,7 +268,7 @@ c
 c     ANGITENSIN CONTROL BLOCK
 c
 c     ****************************************************************
-        CNE=152-CNA
+        CNE=152.0-CNA
         IF(CNE.LT.1.)CNE=1.
         ANR=((17.75-GFN*CNA)*AGK+1.)*REK
         ANW=ANW+((ANR-1.)*10.-ANW)*ANV*I
@@ -285,8 +286,6 @@ c     ****************************************************************
       SUBROUTINE BLOOD(HKM,HM,HMK,I,POT,POY,PO1,PO2,RC1,RC2,RCD,RKC,
      *           VB,VIB,VIE,VIM,VP,VRC)
         REAL I
-c TODO: check the rutine
-
 c
 c     RED CELLS AND VISCOSITY BLOCK
 c----------------------------------------------------------------------
@@ -310,7 +309,6 @@ c----------------------------------------------------------------------
       SUBROUTINE MUSCLE(ALO,AMM,AOM,AUP,A4K,BFM,EXC,HM,I,MMO,OMM,OSA,
      *             OVA,OVS,O2A,PDO,PK1,PK2,PK3,PMO,PM1,PM3,PM4,PM5,
      *             POE,POM,PVO,P2O,QOM,RMO,VPF,Z5,Z6)
-c     TODO: check rutine
         REAL I,MMO
   180   OSA=ALO-VPF*0.5
         OVA=OSA*HM*5.
@@ -336,7 +334,6 @@ c     TODO: check rutine
       SUBROUTINE AUTORG(AOM,ARM,AR1,AR2,AR3,A1K,A2K,A3K,BFN,DOB,HM,I,
      *             MO2,OSV,OVA,O2M,POA,POB,POC,POD,POK,PON,POR,POT,
      *             POV,POZ,P1O,QO2,RDO,Z,Z4,Z7)
-c TODO:check rutine
         REAL I,MO2
         OSV=OSV+((BFN*OVA-DOB)/HM/5./BFN-OSV)/Z7
         POV=OSV*57.14
@@ -349,12 +346,19 @@ c TODO:check rutine
         P1O=POT
         IF(POT.GT.8.)P1O=8.
         POD=POV-POR
-        POB=POB+(POB-AR1)*(1.-EXP(-I/A1K))
+
+c/:
+        POB=POB+(POK*POD+1.-POB)/Z
+        IF(POB.LT..2)POB=.2
+        AR1=AR1+(POB-AR1)*(1.-EXP(-I/A1K))
+c:/
+c !!! there was this line instead the block above
+C        POB=POB+(POB-AR1)*(1.-EXP(-I/A1K))
+
         ARM=AR1*AR2*AR3
         POA=POA+(PON*POD+1.-POA)/Z
         IF(POA.LT.0.5)POA=0.5
-        AR2=AR2+(POA-AR2)*(1.-EXP(-I/A1K))
-c   in previous line was A2K instead of A1K
+        AR2=AR2+(POA-AR2)*(1.-EXP(-I/A2K))
         IF(POD)194,192,192
   192   POC=POZ*POD+1.
         GO TO 196
