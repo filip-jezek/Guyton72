@@ -36,6 +36,8 @@ c        INCLUDE 'noDeclarations.inc'
      *  0.0,7.0,30.0,6.25,60.0,3.0,100.0,1.0,160.0,0.15,400.0,0.05,
      *  400.0,0.05/
 
+      REAL next_change_my
+      next_change_my = 0.0
 c     Open the result file:
       open (102, FILE = 'Guiton72Results.txt', ACTION = 'WRITE')
 c      write(102,5)
@@ -48,7 +50,8 @@ c      OUTPUTSTEP_MY = 1
 c      NEXTOUTPUT_MY = 0
       IF (I .GT. 0.5) I = 0.5
 100   IF(OUT .EQ. 3.0) CALL PUTOUT
-      CALL saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID)
+      CALL saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,I3,
+     *                  next_change_my)
 
       T = T+I2
       CALL HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
@@ -607,21 +610,39 @@ c TODO:check rutine
         return
       end
 
-      subroutine saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID)
-        REAL REK,NID
+      subroutine saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,
+     *                        I3,next_change_my)
+        REAL REK,NID,I3,next_change_my
         write(6,899) NID
   899   format(E12.6)
 c output file header:
         if (T.EQ.0) write (102,900)
-c changes according to protocol:
-        if (T.GE.60*2) REK = 0.3
-        if (T.GE.60*96) NID = 0.5
-  900   format('T; VEC; VB; AU; QLO; RTP; PA; HR; ANC; VUD; REK; NID;')
-        write (102,901) T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK, NID
-  901   FORMAT (12(E12.6,'; '))
-        if (T.GT.11520) GO TO 100
+  900   format('T; VEC; VB; AU; QLO; RTP; PA; HR; ANC;
+     *     VUD; REK; NID; I3;')
+
+
+c changes according to protocol :
+        IF (T.GE.60*2) THEN
+c          write (6,902) T
+c  902     FORMAT ('setting REK to 0.3 at time ', E8.2)
+          REK = 0.3
+          I3 = 0.0
+        END IF
+        IF (T.GE.60*4) I3 = 20.0
+
+        IF (T.GE.60*96) THEN
+c          write (6,901) T
+c  901     FORMAT ('setting NID to 0.5 at time ', E8.2)
+          NID = 0.5
+          I3 = 0.0
+        END IF
+        IF (T.GE.60*98) I3 = 20.0
+
+  100   write (102,950) T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,I3
+  950   FORMAT (13(E12.6,'; '))
+        if (T.GT.11520) GO TO 101
         RETURN
-  100   close(102)
+  101   close(102)
         write(6,*) 'Finished.'
         STOP
       END
