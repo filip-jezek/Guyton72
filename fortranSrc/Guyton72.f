@@ -39,7 +39,7 @@ c        INCLUDE 'noDeclarations.inc'
       REAL next_change_my
       next_change_my = 0.0
 c     Open the result file:
-      open (102, FILE = 'Guiton72Results.txt', ACTION = 'WRITE')
+      open (102, FILE = 'Guyton72Results.txt', ACTION = 'WRITE')
 c      write(102,5)
       write(6,5)
     5 FORMAT  (/'GUYTON MODEL FROM WHITE'/
@@ -50,8 +50,15 @@ c      OUTPUTSTEP_MY = 1
 c      NEXTOUTPUT_MY = 0
       IF (I .GT. 0.5) I = 0.5
 100   IF(OUT .EQ. 3.0) CALL PUTOUT
-      CALL saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,I3,
-     *                  next_change_my)
+c     original Guytons protocol:
+c      CALL saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,I3,
+c     *                  next_change_my)
+
+c     Ted's protocol:
+      CALL saltLowHigh(T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+     * CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
+     * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
+     * VVS,ARM,POT,STH,VGD,ANC,ANM,ANT,ANU,ANP)
 
       T = T+I2
       CALL HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
@@ -524,7 +531,9 @@ c in word there was passed dpp in adition, ppd was in different position
         IF(VUD.LT.0.0002)VUD=0.0002
         NOZ=1000.*VUD/AM/(CNE/CNX+CNY)
         NOD=NOD+(NOZ-NOD)/Z
-        NED=NID*STH-NOD
+c        NED=NID*STH-NOD
+c    For salt loading experiment, where the salt is strictly controlled:
+        NED=NID*1-NOD
         NAE=NAE+NED*I
       RETURN
       END
@@ -613,8 +622,8 @@ c TODO:check rutine
       subroutine saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,
      *                        I3,next_change_my)
         REAL REK,NID,I3,next_change_my
-        write(6,899) NID
-  899   format(E12.6)
+c        write(6,899) NID
+c  899   format(E12.6)
 c output file header:
         if (T.EQ.0) write (102,900)
   900   format('T; VEC; VB; AU; QLO; RTP; PA; HR; ANC;
@@ -646,3 +655,41 @@ c  901     FORMAT ('setting NID to 0.5 at time ', E8.2)
         write(6,*) 'Finished.'
         STOP
       END
+
+      subroutine saltLowHigh(T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+     * CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
+     * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
+     * VVS,ARM,NID2,STH,STH2NID,VGD,ANC,ANM,ANT,ANU,ANP)
+
+      REAL T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+     *  CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
+     *  PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
+     *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP
+
+c     CA and EVR variables are constants, that are hardcoded here
+c     in Fortran code. Removing from output.
+
+        if (T.EQ.0) write (102,900)
+  900   format('T;NID;NOD;NAE;PA;QLO;QAO;HR;VB;VP;VEC;VTS;
+     *  CNA;TVD;VTW;REK;NED;AAR;BFM;BFN;CPP;DLP;GFR;GLP;HM;IFP;PFL;
+     *  PRP;PVS;RBF;RFN;RR;RSM;RSN;SVO;VAE;VAS;VG;VIF;VUD;AU;AUH;AUM;
+     *  VVS;ARM;STH;VGD;ANC;ANM;ANT;ANU;ANP')
+c       NID=0.1 is default
+c       after 2 weeks stabilisation low salt diet:
+        if (T.GE.20160.0) NID = 0.0208
+c       after another week high salt diet
+        if (T.GE.20160.0+10080.0) NID = 0.1875
+
+        write (102,950) T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+     *  CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
+     *  PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
+     *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP
+  950   FORMAT (55(E12.6,'; '))
+
+        if (T.GT.383040) GO TO 101
+        RETURN
+  101   close(102)
+        write(6,*) 'Finished.'
+        STOP
+      END
+
