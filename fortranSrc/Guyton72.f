@@ -8,6 +8,7 @@ c       CIRCEI
 c       include when during implementation to check types and whether
 c       variables are declared to avid typos:
         INCLUDE 'declarations.inc'
+        REAL NEXTOUTPUT_MY, OUTPUTSTEP_MY
 c       include finally:
 c        INCLUDE 'noDeclarations.inc'
         DATA FUN1(1),FUN1(2),FUN1(3),FUN1(4),FUN1(5),FUN1(6),FUN1(7),
@@ -43,8 +44,12 @@ c     Open the result file:
      *   '   REFER TO GE-AGS USER GUIDE TIR 741-MED-3017'//)
       INCLUDE 'ParamsAndStart.inc'
 
+      OUTPUTSTEP_MY = 1
+      NEXTOUTPUT_MY = 0
       IF (I .GT. 0.5) I = 0.5
 100   IF(OUT .EQ. 3.0) CALL PUTOUT
+      CALL OUTPUT_MY(T,NEXTOUTPUT_MY,OUTPUTSTEP_MY,VEC,VB,AU,QLO,
+     *                      RTP,PA,HR,ANC,VUD)
 
       T = T+I2
       CALL HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
@@ -370,7 +375,6 @@ C        POB=POB+(POB-AR1)*(1.-EXP(-I/A1K))
 
       SUBROUTINE ADH(AH,AHC,AHK,AHM,AHY,AHZ,AH7,AH8,AUP,CNA,CNB,CNR,
      *       CNZ,I,PRA,Z)
-c TODO:check rutine
         REAL I
         CNB=CNA-CNR
         AHZ=0.2*PRA
@@ -388,7 +392,6 @@ c TODO:check rutine
 
       SUBROUTINE MISC1(AHM,AU4,AU8,I,SR,SRK,STH,TVD,TVZ,VEC,VIC,VTW,
      *         VVE,VV6,VV7,Z )
-c TODO:check rutine
         REAL I
         VV6=VV6+(SR*(VVE-0.301)-VV7-VV6)/Z
         VV7=VV7+VV6*(1.-EXP(-I/SRK))
@@ -402,7 +405,6 @@ c TODO:check rutine
 
       SUBROUTINE HEART(AUR,DHM,HMD,HR,I,PA,PMC,PMP,PMS,POT,PRA,QAO,
      *           QLO,RTP,SVO,VAE,VLE,VPE,VRE,VVE)
-c TODO:check rutine
         REAL I
         DHM=(POT-6.)*0.0025
         HMD=HMD+DHM*I
@@ -420,7 +422,7 @@ c TODO:check rutine
       SUBROUTINE CAPMBD(BFN,CFC,CPI,CPP,DFP,I,IFP,PC,PCD,PIF,PLD,PPC,
      *              PRP,PTC,PTS,PTT,PVG,PVS,RVS,TVD,VG,VID,VIF,VP,
      *              VPD,VTC,VTD,VTL,VTS,VUD,Z,Z1,FUN6)
-c TODO:check rutine
+        DIMENSION FUN6(14)
         REAL I,IFP
   130   PTT=(VTS/12.)**2
         VIF=VTS-VG
@@ -445,7 +447,6 @@ c TODO:check rutine
 
       SUBROUTINE PULMON(CPF,CPP,CPN,DFP,I,PCP,PFI,PLA,PLF,POS,PPA,PPC,
      *              PPD,PPI,PPN,PPO,PPR,VP,VPD,VPF,Z,Z3)
-c TODO:check rutine
         REAL I
         VP=VP+(VPD*I)/Z3
   200   PCP=0.45*PPA+0.55*PLA
@@ -466,7 +467,6 @@ c TODO:check rutine
       END
 
       SUBROUTINE MISC2(HPL,HPR,HSL,HSR,I,PA,PPA,POT,STH,Z10,Z11,Z13)
-c TODO:check rutine
         REAL I
         HPL=HPL+(((PA/100./HSL)**Z13)-HPL)*I/57600.
         HPR=HPR+(((PPA/15./HSR)**Z13)-HPR)*I/57600.
@@ -481,7 +481,6 @@ c second right parenthesis was missing
      *            DPO,DPY,GPD,GPR,I,IFP,LPK,PC,PCE,PGX,PRP,VG,
      *            VTL,Z,PPD)
 c in word there was passed dpp in adition, ppd was in different position
-c TODO:check rutine
         REAL I,IFP,LPK
   135   DPL=DPL+(VTL*CPI-DPL)/Z
         IF(PC.LT.0.)PC=0.
@@ -502,7 +501,6 @@ c TODO:check rutine
       SUBROUTINE KIDNEY(AAR,AHM,AM,APD,ARF,AUM,CNE,CNX,CNY,GBL,GFN,GFR,
      *            GF2,GF3,GF4,GLP,I,NAE,NED,NID,NOD,NOZ,PA,PAR,PFL,
      *            PPC,RBF,REK,RFN,RR,STH,TRR,VIM,VUD,Z)
-c TODO:check rutine
         REAL I,NAE,NED,NID,NOD,NOZ
   142   GF3=((GFN/0.125-1.)*GF4)+1.
         IF(GF3.GT.15.)GF3=15.
@@ -533,11 +531,11 @@ c TODO:check rutine
 
       SUBROUTINE IONS(AM,CCD,CKE,CKI,CNA,I,KCD,KE,KED,KI,KID,KIE,
      *                KIR,KOD,NAE,REK,VEC,VIC,VID,VP,VPF,VTS,Z)
-c TODO:check rutine
         REAL I,KCD,KE,KED,KI,KID,KIE,KIR,KOD,NAE
   160   VEC=VTS+VP+VPF
         CKE=KE/VEC
-        KOD=(0.00042*CKE+0.001*AM*CKE)*REK
+        KOD=(0.00042*CKE+0.0001*AM*CKE)*REK
+c the second numeric constant was 0.001
         KIR=2850.+140.*CKE
         KIE=KIR-KI
         KCD=KCD+(KIE*0.013-KCD)/Z
@@ -557,6 +555,7 @@ c TODO:check rutine
      *       PRM,PTC,PTS,PTT,VG,VGD,VIF,VTS,V2D,FUN6)
 c VRS was passed but has is not declared and is not used
 c TODO:check rutine
+        DIMENSION FUN6(14)
         REAL IFP
   140   CHY=HYL/VG
         PRM=-5.9*CHY+24.2
@@ -609,3 +608,15 @@ c TODO:check rutine
         return
       end
 
+      subroutine OUTPUT_MY(T,NEXTOUTPUT_MY,OUTPUTSTEP_MY,VEC,VB,AU,QLO,
+     *                      RTP,PA,HR,ANC,VUD)
+        WRITE(102,*) 'T je '
+        WRITE(102,*) T
+        IF(T.LE.0) write(102,*) 'AHOJ'
+  100   FORMAT(/'T,NEXTOUTPUT_MY,OUTPUTSTEP_MY,VEC,VB'/)
+c  ,AU,QLO,RTP,
+c     *     PA,HR,ANC,VUD')
+
+
+        IF(T.LT.NEXTOUPUT_MY) RETURN
+      END
