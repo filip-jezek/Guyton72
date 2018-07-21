@@ -8,7 +8,7 @@ c       CIRCEI
 c       include when during implementation to check types and whether
 c       variables are declared to avid typos:
         INCLUDE 'declarations.inc'
-        REAL NEXTOUTPUT_MY, OUTPUTSTEP_MY
+c        REAL NEXTOUTPUT_MY, OUTPUTSTEP_MY
 c       include finally:
 c        INCLUDE 'noDeclarations.inc'
         DATA FUN1(1),FUN1(2),FUN1(3),FUN1(4),FUN1(5),FUN1(6),FUN1(7),
@@ -38,18 +38,17 @@ c        INCLUDE 'noDeclarations.inc'
 
 c     Open the result file:
       open (102, FILE = 'Guiton72Results.txt', ACTION = 'WRITE')
-      write(102,5)
+c      write(102,5)
       write(6,5)
     5 FORMAT  (/'GUYTON MODEL FROM WHITE'/
      *   '   REFER TO GE-AGS USER GUIDE TIR 741-MED-3017'//)
       INCLUDE 'ParamsAndStart.inc'
 
-      OUTPUTSTEP_MY = 1
-      NEXTOUTPUT_MY = 0
+c      OUTPUTSTEP_MY = 1
+c      NEXTOUTPUT_MY = 0
       IF (I .GT. 0.5) I = 0.5
 100   IF(OUT .EQ. 3.0) CALL PUTOUT
-      CALL OUTPUT_MY(T,NEXTOUTPUT_MY,OUTPUTSTEP_MY,VEC,VB,AU,QLO,
-     *                      RTP,PA,HR,ANC,VUD)
+      CALL saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID)
 
       T = T+I2
       CALL HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
@@ -608,15 +607,21 @@ c TODO:check rutine
         return
       end
 
-      subroutine OUTPUT_MY(T,NEXTOUTPUT_MY,OUTPUTSTEP_MY,VEC,VB,AU,QLO,
-     *                      RTP,PA,HR,ANC,VUD)
-        WRITE(102,*) 'T je '
-        WRITE(102,*) T
-        IF(T.LE.0) write(102,*) 'AHOJ'
-  100   FORMAT(/'T,NEXTOUTPUT_MY,OUTPUTSTEP_MY,VEC,VB'/)
-c  ,AU,QLO,RTP,
-c     *     PA,HR,ANC,VUD')
-
-
-        IF(T.LT.NEXTOUPUT_MY) RETURN
+      subroutine saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID)
+        REAL REK,NID
+        write(6,899) NID
+  899   format(E12.6)
+c output file header:
+        if (T.EQ.0) write (102,900)
+c changes according to protocol:
+        if (T.GE.60*2) REK = 0.3
+        if (T.GE.60*96) NID = 0.5
+  900   format('T; VEC; VB; AU; QLO; RTP; PA; HR; ANC; VUD; REK; NID;')
+        write (102,901) T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK, NID
+  901   FORMAT (12(E12.6,'; '))
+        if (T.GT.11520) GO TO 100
+        RETURN
+  100   close(102)
+        write(6,*) 'Finished.'
+        STOP
       END
