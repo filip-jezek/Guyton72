@@ -55,7 +55,7 @@ c      CALL saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,I3,
 c     *                  next_change_my)
 
 c     Ted's protocol:
-      CALL saltLowHigh(T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+      CALL saltLowHigh(T,RTP,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
      * CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
      * VVS,ARM,POT,STH,VGD,ANC,ANM,ANT,ANU,ANP)
@@ -656,12 +656,12 @@ c  901     FORMAT ('setting NID to 0.5 at time ', E8.2)
         STOP
       END
 
-      subroutine saltLowHigh(T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+      subroutine saltLowHigh(T,RTP,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
      * CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
      * VVS,ARM,NID2,STH,STH2NID,VGD,ANC,ANM,ANT,ANU,ANP)
 
-      REAL T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+      REAL T,RTP,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
      *  CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      *  PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
      *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP
@@ -670,7 +670,7 @@ c     CA and EVR variables are constants, that are hardcoded here
 c     in Fortran code. Removing from output.
 
         if (T.EQ.0) write (102,900)
-  900   format('T;NID;NOD;NAE;PA;QLO;QAO;HR;VB;VP;VEC;VTS;
+  900   format('T;RTP;NID;NOD;NAE;PA;QLO;QAO;HR;VB;VP;VEC;VTS;
      *  CNA;TVD;VTW;REK;NED;AAR;BFM;BFN;CPP;DLP;GFR;GLP;HM;IFP;PFL;
      *  PRP;PVS;RBF;RFN;RR;RSM;RSN;SVO;VAE;VAS;VG;VIF;VUD;AU;AUH;AUM;
      *  VVS;ARM;STH;VGD;ANC;ANM;ANT;ANU;ANP')
@@ -680,11 +680,11 @@ c       after 2 weeks stabilisation low salt diet:
 c       after another week high salt diet
         if (T.GE.20160.0+10080.0) NID = 0.1875
 
-        write (102,950) T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+        write (102,950) T,RTP,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
      *  CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      *  PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
      *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP
-  950   FORMAT (55(E12.6,'; '))
+  950   FORMAT (56(E12.6,'; '))
 
         if (T.GT.383040) GO TO 101
         RETURN
