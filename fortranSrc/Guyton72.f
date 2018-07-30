@@ -8,7 +8,6 @@ c       CIRCEI
 c       include when during implementation to check types and whether
 c       variables are declared to avid typos:
         INCLUDE 'declarations.inc'
-c        REAL NEXTOUTPUT_MY, OUTPUTSTEP_MY
 c       include finally:
 c        INCLUDE 'noDeclarations.inc'
         DATA FUN1(1),FUN1(2),FUN1(3),FUN1(4),FUN1(5),FUN1(6),FUN1(7),
@@ -38,14 +37,11 @@ c        INCLUDE 'noDeclarations.inc'
 
 c     Open the result file:
       open (102, FILE = 'Guyton72Results.txt', ACTION = 'WRITE')
-c      write(102,5)
       write(6,5)
     5 FORMAT  (/'GUYTON MODEL FROM WHITE'/
      *   '   REFER TO GE-AGS USER GUIDE TIR 741-MED-3017'//)
       INCLUDE 'ParamsAndStart.inc'
 
-c      OUTPUTSTEP_MY = 1
-c      NEXTOUTPUT_MY = 0
       IF (I .GT. 0.5) I = 0.5
 100   IF(OUT .EQ. 3.0) CALL PUTOUT
 c     original Guytons protocol:
@@ -58,6 +54,7 @@ c     Ted's protocol:
      * VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP)
 
       T = T+I2
+
       CALL HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
      *          CN2,CN3,CN7,CV ,DAS,DLA,DPA,DRA,DVS,FIS,HMD,HPL,
      *          HPR,HSL,HSR,I2,LVM,PA,PAM,PA2,PC,PGL,PGS,PLA,
@@ -307,6 +304,9 @@ c----------------------------------------------------------------------
         VIE=HM/(HMK-HM)/HKM
         VIB=VIE+1.5
         VIM=0.3333*VIB
+c----------------------------------------------------------------------
+c     RED BLOOD CELLS
+c----------------------------------------------------------------------
         RC2=RKC*VRC
         PO2=PO1-POT
         IF(PO2.LT.0.2375)PO2=0.2375
@@ -321,6 +321,9 @@ c----------------------------------------------------------------------
      *             OVA,OVS,O2A,PDO,PK1,PK2,PK3,PMO,PM1,PM3,PM4,PM5,
      *             POE,POM,PVO,P2O,QOM,RMO,VPF,Z5,Z6)
         REAL I,MMO
+c
+c     MUSCLE BLOOD FLOW CONTROL AND PO2 BLOCK
+c
   180   OSA=ALO-VPF*0.5
         OVA=OSA*HM*5.
         OVS=OVS+((BFM*OVA-RMO)/HM/5./BFM-OVS)/Z6
@@ -346,6 +349,12 @@ c----------------------------------------------------------------------
      *             MO2,OSV,OVA,O2M,POA,POB,POC,POD,POK,PON,POR,POT,
      *             POV,POZ,P1O,QO2,RDO,Z,Z4,Z7)
         REAL I,MO2
+c
+c     NON-MUSCLE OXYGEN DELIVERY BLOCK
+c     AND NON-MUSCLE LOCAL BLOOD FLOW CONTROL BLOCK
+c----------------------------------------------------------------------
+c     AUTOREGULATIONRAPID
+c----------------------------------------------------------------------
         OSV=OSV+((BFN*OVA-DOB)/HM/5./BFN-OSV)/Z7
         POV=OSV*57.14
         RDO=POT**3.
@@ -367,9 +376,15 @@ c !!! there was this line instead the block above
 C        POB=POB+(POB-AR1)*(1.-EXP(-I/A1K))
 
         ARM=AR1*AR2*AR3
+c----------------------------------------------------------------------
+c     AUTOREGULATION INTERMEDIATE
+c----------------------------------------------------------------------
         POA=POA+(PON*POD+1.-POA)/Z
         IF(POA.LT.0.5)POA=0.5
         AR2=AR2+(POA-AR2)*(1.-EXP(-I/A2K))
+c----------------------------------------------------------------------
+c     AUTOREGULATION LONG-TERM
+c----------------------------------------------------------------------
         IF(POD)194,192,192
   192   POC=POZ*POD+1.
         GO TO 196
@@ -399,12 +414,22 @@ C        POB=POB+(POB-AR1)*(1.-EXP(-I/A1K))
       SUBROUTINE MISC1(AHM,AU4,AU8,I,SR,SRK,STH,TVD,TVZ,VEC,VIC,VTW,
      *         VVE,VV6,VV7,Z )
         REAL I
+c----------------------------------------------------------------------
+c     VASCULAR STRESS RELAXATION BLOCK
+c----------------------------------------------------------------------
         VV6=VV6+(SR*(VVE-0.301)-VV7-VV6)/Z
         VV7=VV7+VV6*(1.-EXP(-I/SRK))
+c----------------------------------------------------------------------
+c     THIRST AND DRINKING BLOCK
+c----------------------------------------------------------------------
         TVZ=(0.01*AHM-0.009)*STH
         TVD=TVD+(TVZ-TVD)/Z
         IF(TVD.LT.0.)TVD=0.
         VTW=VIC+VEC
+c----------------------------------------------------------------------
+c     AUTONOMIC CONTROL BLOCK
+c     ADAPTATION OF BARORECEPTORS
+c----------------------------------------------------------------------
         AU4=AU4+AU8*I
       RETURN
       END
@@ -412,12 +437,24 @@ C        POB=POB+(POB-AR1)*(1.-EXP(-I/A1K))
       SUBROUTINE HEART(AUR,DHM,HMD,HR,I,PA,PMC,PMP,PMS,POT,PRA,QAO,
      *           QLO,RTP,SVO,VAE,VLE,VPE,VRE,VVE)
         REAL I
+c
+c     HEART HYPERTROPHY OR DETERIORATION BLOCK
+c
+c----------------------------------------------------------------------
+c     HEART VICIOUS CYCLE
+c----------------------------------------------------------------------
         DHM=(POT-6.)*0.0025
         HMD=HMD+DHM*I
         IF(HMD.GT.1.)HMD=1.
+c----------------------------------------------------------------------
+c     MEAN CIRCULATORY PRESSURES
+c----------------------------------------------------------------------
         PMC=(VAE+VVE+VRE+VPE+VLE)/0.11
         PMS=(VAE+VVE+VRE)/0.09375
         PMP=(VPE+VLE)/0.01625
+c----------------------------------------------------------------------
+c     HEART RATE AND STROKE VOLUME BLOCK AND TOTAL PERIPHERAL RESISTANCE
+c----------------------------------------------------------------------
         HR=(32.+40.*AUR+PRA*2.)*((HMD-1.)*0.5+1.)
         RTP=(PA-PRA)/QAO
         SVO=QLO/HR
@@ -474,9 +511,15 @@ C        POB=POB+(POB-AR1)*(1.-EXP(-I/A1K))
 
       SUBROUTINE MISC2(HPL,HPR,HSL,HSR,I,PA,PPA,POT,STH,Z10,Z11,Z13)
         REAL I
+c----------------------------------------------------------------------
+c     HEART HYPERTROPHY OR DETERIORATION BLOCK
+c----------------------------------------------------------------------
         HPL=HPL+(((PA/100./HSL)**Z13)-HPL)*I/57600.
         HPR=HPR+(((PPA/15./HSR)**Z13)-HPR)*I/57600.
 c second right parenthesis was missing
+c----------------------------------------------------------------------
+c     TISSUE EFFECT ON THIRST AND SALT INTAKE
+c----------------------------------------------------------------------
         STH=(Z10-POT)*Z11
         IF(STH.LT.1.)STH=1.
         IF(STH.GT.8.)STH=8.
@@ -488,6 +531,12 @@ c second right parenthesis was missing
      *            VTL,Z,PPD)
 c in word there was passed dpp in adition, ppd was in different position
         REAL I,IFP,LPK
+c
+c     TISSUE FLUILS,PRESSURES AND GEL BLOCK
+c
+c----------------------------------------------------------------------
+c     PLASMA AND TISSUE FLUID PROTEIN
+c----------------------------------------------------------------------
   135   DPL=DPL+(VTL*CPI-DPL)/Z
         IF(PC.LT.0.)PC=0.
         DPC=DPC+(CPK*(CPP-CPI)*PC**PCE-DPC)/Z
@@ -496,6 +545,9 @@ c in word there was passed dpp in adition, ppd was in different position
         IF(CPP.GT.CPR)DLZ=4.*DLZ
         DLP=DLP+(DLZ-DLP)/Z
         PRP=PRP+(DLP-DPO+DPL-DPC-PPD)*I
+c----------------------------------------------------------------------
+c     GEL PROTEIN DYNAMICS
+c----------------------------------------------------------------------
   141   PGX=CHY**2*0.01332*CPG+CPG
         GPD=GPD+(0.0005*(CPI-PGX)*VG-GPD)/Z
         GPR=GPR+GPD*I
@@ -526,6 +578,10 @@ c in word there was passed dpp in adition, ppd was in different position
         TRR=0.8*GFR+0.025*REK-0.001*REK/AM/AHM
         VUD=VUD+(GFR-TRR-VUD)/Z
         IF(VUD.LT.0.0002)VUD=0.0002
+c----------------------------------------------------------------------
+c     KIDNEY SALT OUTPUT AND SALT INTAKE
+c     (SEE ALSO ELECTROLYTES AND CELL WATER BLOCK)
+c----------------------------------------------------------------------
         NOZ=1000.*VUD/AM/(CNE/CNX+CNY)
         NOD=NOD+(NOZ-NOD)/Z
 c        NED=NID*STH-NOD
