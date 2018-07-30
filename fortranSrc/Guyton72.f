@@ -36,8 +36,6 @@ c        INCLUDE 'noDeclarations.inc'
      *  0.0,7.0,30.0,6.25,60.0,3.0,100.0,1.0,160.0,0.15,400.0,0.05,
      *  400.0,0.05/
 
-      REAL next_change_my
-      next_change_my = 0.0
 c     Open the result file:
       open (102, FILE = 'Guyton72Results.txt', ACTION = 'WRITE')
 c      write(102,5)
@@ -51,14 +49,13 @@ c      NEXTOUTPUT_MY = 0
       IF (I .GT. 0.5) I = 0.5
 100   IF(OUT .EQ. 3.0) CALL PUTOUT
 c     original Guytons protocol:
-c      CALL saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,I3,
-c     *                  next_change_my)
+c      CALL saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,I3)
 
 c     Ted's protocol:
-      CALL saltLowHigh(T,RTP,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+      CALL saltLowHigh(T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
      * CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
-     * VVS,ARM,POT,STH,VGD,ANC,ANM,ANT,ANU,ANP)
+     * VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP)
 
       T = T+I2
       CALL HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
@@ -620,8 +617,8 @@ c TODO:check rutine
       end
 
       subroutine saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,
-     *                        I3,next_change_my)
-        REAL REK,NID,I3,next_change_my
+     *                        I3)
+        REAL REK,NID,I3
 c        write(6,899) NID
 c  899   format(E12.6)
 c output file header:
@@ -656,34 +653,34 @@ c  901     FORMAT ('setting NID to 0.5 at time ', E8.2)
         STOP
       END
 
-      subroutine saltLowHigh(T,RTP,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+      subroutine saltLowHigh(T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
      * CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
-     * VVS,ARM,NID2,STH,STH2NID,VGD,ANC,ANM,ANT,ANU,ANP)
+     * VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP)
 
-      REAL T,RTP,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+      REAL T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
      *  CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      *  PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
-     *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP
+     *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP
 
 c     CA and EVR variables are constants, that are hardcoded here
 c     in Fortran code. Removing from output.
 
         if (T.EQ.0) write (102,900)
-  900   format('T;RTP;NID;NOD;NAE;PA;QLO;QAO;HR;VB;VP;VEC;VTS;
+  900   format('T;NID;NOD;NAE;PA;QLO;QAO;HR;VB;VP;VEC;VTS;
      *  CNA;TVD;VTW;REK;NED;AAR;BFM;BFN;CPP;DLP;GFR;GLP;HM;IFP;PFL;
      *  PRP;PVS;RBF;RFN;RR;RSM;RSN;SVO;VAE;VAS;VG;VIF;VUD;AU;AUH;AUM;
-     *  VVS;ARM;STH;VGD;ANC;ANM;ANT;ANU;ANP')
+     *  VVS;ARM;STH;VGD;ANC;ANM;ANT;ANU;ANP;RTP')
 c       NID=0.1 is default
 c       after 2 weeks stabilisation low salt diet:
         if (T.GE.20160.0) NID = 0.0208
 c       after another week high salt diet
         if (T.GE.20160.0+10080.0) NID = 0.1875
 
-        write (102,950) T,RTP,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+        write (102,950) T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
      *  CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      *  PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
-     *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP
+     *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP
   950   FORMAT (56(E12.6,'; '))
 
         if (T.GT.383040) GO TO 101
