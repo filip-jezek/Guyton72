@@ -390,3 +390,5 @@ c     !!! we dont know the real name of VGO var, it is not declared
             Z14 =   0.000000
             Z15 =   0.000000
             Z16 =   0.000000
+            VGD =   0.000000
+c VGD added to avoid writing uninitialized var
