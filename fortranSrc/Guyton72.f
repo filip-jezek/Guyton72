@@ -53,6 +53,12 @@ c     Ted's protocol:
      * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
      * VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP)
 
+c      write(6,6)
+c6     format ("T, RTP, NAE, QLO, PA, ARM, RR, VB, HR")
+c      write(6,7) T, RTP, NAE, QLO, PA, ARM, RR, VB, HR
+c7     format (9(E12.6,'; '))
+c      if (T.GE.1.0) stop
+
       T = T+I2
 
       CALL HEMO(AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
@@ -145,8 +151,16 @@ c TODO how to stop the simulation and close the output file?
      *          RVS,U  ,VAE,VAS,VBD,VIM,VLA,VLE,VP,VPA,VPE,VRA,
      *          VRC,VRE,VVE,VVR,VVS,VV7,VV8,X,FUN1,FUN2,FUN3,
      *          FUN4)
-      DIMENSION FUN1(14),FUN2(14),FUN3(14),FUN4(14)
-      REAL I2,LVM
+        implicit none
+        DIMENSION FUN1(14),FUN2(14),FUN3(14),FUN4(14)
+        REAL AMM,ANM,ANU,ANY,ANZ,ARM,AUH,AUM,AUY,AVE,BFM,BFN,
+     *          CN2,CN3,CN7,CV ,DAS,DLA,DPA,DRA,DVS,FIS,HMD,HPL,
+     *          HPR,HSL,HSR,I2,LVM,PA,PAM,PA2,PC,PGL,PGS,PLA,
+     *          PPA,PP1,PP2,PRA,PR1,PVS,QAO,QLN,QLO,QPO,QRF,QRN,
+     *          QRO,QVO,RAM,RAR,RBF,RPA,RPT,RPV,RSM,RSN,RVG,RVM,
+     *          RVS,U  ,VAE,VAS,VBD,VIM,VLA,VLE,VP,VPA,VPE,VRA,
+     *          VRC,VRE,VVE,VVR,VVS,VV7,VV8,X,FUN1,FUN2,FUN3,
+     *          FUN4
 C
 C     CIRCULATORY DYNAMICS BLOCK
 C     HEMODYNAMICS
@@ -213,7 +227,10 @@ C
       SUBROUTINE AUTO(AU,AUB,AUC,AUH,AUJ,AUK,AUL,AUM,AUN,AUO,AUP,AUQ,
      *         AUR,AUS,AUV,AUX,AUZ,AU4,AU6,AU8,A1B,DAU,EXC,EXE,
      *          EX1,I2,PA,PA1,POQ,POT,P2O,STA,VVR,VV9,Y,Z,Z8,Z12)
-      REAL I2
+        implicit none
+        REAL AU,AUB,AUC,AUH,AUJ,AUK,AUL,AUM,AUN,AUO,AUP,AUQ,
+     *         AUR,AUS,AUV,AUX,AUZ,AU4,AU6,AU8,A1B,DAU,EXC,EXE,
+     *          EX1,I2,PA,PA1,POQ,POT,P2O,STA,VVR,VV9,Y,Z,Z8,Z12
 c
 c     AUTONOMIC CONTROL BLOCK
 c
@@ -254,10 +271,11 @@ c 170 -> 170.0
       END
 
       SUBROUTINE HORMON(AM,AMC,AMP,AMR,AMT,AM1,ANM,CKE,PA,Z,FUN7,
-     *AGK,ANC,ANP,ANR,ANT,ANV,ANW,AN1,CNA,CNE,GFN,
-     *I  ,REK)
-      DIMENSION FUN7(14)
-      REAL I
+     *  AGK,ANC,ANP,ANR,ANT,ANV,ANW,AN1,CNA,CNE,GFN,I,REK)
+        implicit none
+        DIMENSION FUN7(14)
+        REAL AM,AMC,AMP,AMR,AMT,AM1,ANM,CKE,PA,Z,FUN7,
+     *  AGK,ANC,ANP,ANR,ANT,ANV,ANW,AN1,CNA,CNE,GFN,I,REK
 
 c     ****************************************************************
 c
@@ -293,7 +311,9 @@ c     ****************************************************************
 
       SUBROUTINE BLOOD(HKM,HM,HMK,I,POT,POY,PO1,PO2,RC1,RC2,RCD,RKC,
      *           VB,VIB,VIE,VIM,VP,VRC)
-        REAL I
+        implicit none
+        REAL HKM,HM,HMK,I,POT,POY,PO1,PO2,RC1,RC2,RCD,RKC,
+     *           VB,VIB,VIE,VIM,VP,VRC
 c
 c     RED CELLS AND VISCOSITY BLOCK
 c----------------------------------------------------------------------
@@ -320,7 +340,10 @@ c----------------------------------------------------------------------
       SUBROUTINE MUSCLE(ALO,AMM,AOM,AUP,A4K,BFM,EXC,HM,I,MMO,OMM,OSA,
      *             OVA,OVS,O2A,PDO,PK1,PK2,PK3,PMO,PM1,PM3,PM4,PM5,
      *             POE,POM,PVO,P2O,QOM,RMO,VPF,Z5,Z6)
-        REAL I,MMO
+        implicit none
+        REAL ALO,AMM,AOM,AUP,A4K,BFM,EXC,HM,I,MMO,OMM,OSA,
+     *             OVA,OVS,O2A,PDO,PK1,PK2,PK3,PMO,PM1,PM3,PM4,PM5,
+     *             POE,POM,PVO,P2O,QOM,RMO,VPF,Z5,Z6
 c
 c     MUSCLE BLOOD FLOW CONTROL AND PO2 BLOCK
 c
@@ -348,7 +371,10 @@ c
       SUBROUTINE AUTORG(AOM,ARM,AR1,AR2,AR3,A1K,A2K,A3K,BFN,DOB,HM,I,
      *             MO2,OSV,OVA,O2M,POA,POB,POC,POD,POK,PON,POR,POT,
      *             POV,POZ,P1O,QO2,RDO,Z,Z4,Z7)
-        REAL I,MO2
+        implicit none
+        REAL AOM,ARM,AR1,AR2,AR3,A1K,A2K,A3K,BFN,DOB,HM,I,
+     *             MO2,OSV,OVA,O2M,POA,POB,POC,POD,POK,PON,POR,POT,
+     *             POV,POZ,P1O,QO2,RDO,Z,Z4,Z7
 c
 c     NON-MUSCLE OXYGEN DELIVERY BLOCK
 c     AND NON-MUSCLE LOCAL BLOOD FLOW CONTROL BLOCK
@@ -396,7 +422,9 @@ c----------------------------------------------------------------------
 
       SUBROUTINE ADH(AH,AHC,AHK,AHM,AHY,AHZ,AH7,AH8,AUP,CNA,CNB,CNR,
      *       CNZ,I,PRA,Z)
-        REAL I
+        implicit none
+        REAL AH,AHC,AHK,AHM,AHY,AHZ,AH7,AH8,AUP,CNA,CNB,CNR,
+     *       CNZ,I,PRA,Z
         CNB=CNA-CNR
         AHZ=0.2*PRA
         AHY=AHY+(AHZ-AHY)*0.0007*I
@@ -412,8 +440,10 @@ c----------------------------------------------------------------------
       END
 
       SUBROUTINE MISC1(AHM,AU4,AU8,I,SR,SRK,STH,TVD,TVZ,VEC,VIC,VTW,
-     *         VVE,VV6,VV7,Z )
-        REAL I
+     *         VVE,VV6,VV7,Z)
+        implicit none
+        REAL AHM,AU4,AU8,I,SR,SRK,STH,TVD,TVZ,VEC,VIC,VTW,
+     *         VVE,VV6,VV7,Z
 c----------------------------------------------------------------------
 c     VASCULAR STRESS RELAXATION BLOCK
 c----------------------------------------------------------------------
@@ -436,7 +466,9 @@ c----------------------------------------------------------------------
 
       SUBROUTINE HEART(AUR,DHM,HMD,HR,I,PA,PMC,PMP,PMS,POT,PRA,QAO,
      *           QLO,RTP,SVO,VAE,VLE,VPE,VRE,VVE)
-        REAL I
+        implicit none
+        REAL AUR,DHM,HMD,HR,I,PA,PMC,PMP,PMS,POT,PRA,QAO,
+     *           QLO,RTP,SVO,VAE,VLE,VPE,VRE,VVE
 c
 c     HEART HYPERTROPHY OR DETERIORATION BLOCK
 c
@@ -465,8 +497,11 @@ c----------------------------------------------------------------------
       SUBROUTINE CAPMBD(BFN,CFC,CPI,CPP,DFP,I,IFP,PC,PCD,PIF,PLD,PPC,
      *              PRP,PTC,PTS,PTT,PVG,PVS,RVS,TVD,VG,VID,VIF,VP,
      *              VPD,VTC,VTD,VTL,VTS,VUD,Z,Z1,FUN6)
+        implicit none
         DIMENSION FUN6(14)
-        REAL I,IFP
+        REAL BFN,CFC,CPI,CPP,DFP,I,IFP,PC,PCD,PIF,PLD,PPC,
+     *              PRP,PTC,PTS,PTT,PVG,PVS,RVS,TVD,VG,VID,VIF,VP,
+     *              VPD,VTC,VTD,VTL,VTS,VUD,Z,Z1,FUN6
   130   PTT=(VTS/12.)**2
         VIF=VTS-VG
         CALL FUNCTN(VIF,PTS,FUN6)
@@ -490,7 +525,9 @@ c----------------------------------------------------------------------
 
       SUBROUTINE PULMON(CPF,CPP,CPN,DFP,I,PCP,PFI,PLA,PLF,POS,PPA,PPC,
      *              PPD,PPI,PPN,PPO,PPR,VP,VPD,VPF,Z,Z3)
-        REAL I
+        implicit none
+        REAL CPF,CPP,CPN,DFP,I,PCP,PFI,PLA,PLF,POS,PPA,PPC,
+     *              PPD,PPI,PPN,PPO,PPR,VP,VPD,VPF,Z,Z3
         VP=VP+(VPD*I)/Z3
   200   PCP=0.45*PPA+0.55*PLA
         PPI=2.-0.150/VPF
@@ -510,7 +547,8 @@ c----------------------------------------------------------------------
       END
 
       SUBROUTINE MISC2(HPL,HPR,HSL,HSR,I,PA,PPA,POT,STH,Z10,Z11,Z13)
-        REAL I
+        implicit none
+        REAL HPL,HPR,HSL,HSR,I,PA,PPA,POT,STH,Z10,Z11,Z13
 c----------------------------------------------------------------------
 c     HEART HYPERTROPHY OR DETERIORATION BLOCK
 c----------------------------------------------------------------------
@@ -529,8 +567,11 @@ c----------------------------------------------------------------------
       SUBROUTINE PROTEN(CHY,CPG,CPI,CPK,CPP,CPR,CP1,DLP,DLZ,DPC,DPI,DPL,
      *            DPO,DPY,GPD,GPR,I,IFP,LPK,PC,PCE,PGX,PRP,VG,
      *            VTL,Z,PPD)
+       implicit none
 c in word there was passed dpp in adition, ppd was in different position
-        REAL I,IFP,LPK
+        REAL CHY,CPG,CPI,CPK,CPP,CPR,CP1,DLP,DLZ,DPC,DPI,DPL,
+     *            DPO,DPY,GPD,GPR,I,IFP,LPK,PC,PCE,PGX,PRP,VG,
+     *            VTL,Z,PPD
 c
 c     TISSUE FLUILS,PRESSURES AND GEL BLOCK
 c
@@ -559,7 +600,10 @@ c----------------------------------------------------------------------
       SUBROUTINE KIDNEY(AAR,AHM,AM,APD,ARF,AUM,CNE,CNX,CNY,GBL,GFN,GFR,
      *            GF2,GF3,GF4,GLP,I,NAE,NED,NID,NOD,NOZ,PA,PAR,PFL,
      *            PPC,RBF,REK,RFN,RR,STH,TRR,VIM,VUD,Z)
-        REAL I,NAE,NED,NID,NOD,NOZ
+        implicit none
+        REAL AAR,AHM,AM,APD,ARF,AUM,CNE,CNX,CNY,GBL,GFN,GFR,
+     *            GF2,GF3,GF4,GLP,I,NAE,NED,NID,NOD,NOZ,PA,PAR,PFL,
+     *            PPC,RBF,REK,RFN,RR,STH,TRR,VIM,VUD,Z,GF1
   142   GF3=((GFN/0.125-1.)*GF4)+1.
         IF(GF3.GT.15.)GF3=15.
         IF(GF3.LT.0.4)GF3=0.4
@@ -595,7 +639,9 @@ c    For salt loading experiment, where the salt is strictly controlled:
 
       SUBROUTINE IONS(AM,CCD,CKE,CKI,CNA,I,KCD,KE,KED,KI,KID,KIE,
      *                KIR,KOD,NAE,REK,VEC,VIC,VID,VP,VPF,VTS,Z)
-        REAL I,KCD,KE,KED,KI,KID,KIE,KIR,KOD,NAE
+        implicit none
+        REAL AM,CCD,CKE,CKI,CNA,I,KCD,KE,KED,KI,KID,KIE,
+     *                KIR,KOD,NAE,REK,VEC,VIC,VID,VP,VPF,VTS,Z
   160   VEC=VTS+VP+VPF
         CKE=KE/VEC
         KOD=(0.00042*CKE+0.0001*AM*CKE)*REK
@@ -617,10 +663,12 @@ c the second numeric constant was 0.001
 
       SUBROUTINE GELFLD(CHY,CPG,CPI,GPR,HYL,IFP,PGC,PGH,PGP,PGR,PGX,PIF,
      *       PRM,PTC,PTS,PTT,VG,VGD,VIF,VTS,V2D,FUN6)
+        implicit none
 c VRS was passed but has is not declared and is not used
 c TODO:check rutine
         DIMENSION FUN6(14)
-        REAL IFP
+        REAL CHY,CPG,CPI,GPR,HYL,IFP,PGC,PGH,PGP,PGR,PGX,PIF,
+     *       PRM,PTC,PTS,PTT,VG,VGD,VIF,VTS,V2D,FUN6
   140   CHY=HYL/VG
         PRM=-5.9*CHY+24.2
         PGR=0.4*CHY
@@ -646,7 +694,9 @@ c TODO:check rutine
 
 
       SUBROUTINE FUNCTN(TH,POL,TAB)
+        implicit none
         DIMENSION TAB(14)
+        REAL TH,POL,TAB,I,N,NN
         N=14
         DO 110 I=1,N,2
         IF(TAB(I)-TH) 110,120,110
@@ -674,7 +724,8 @@ c TODO:check rutine
 
       subroutine saltLoadProt(T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,
      *                        I3)
-        REAL REK,NID,I3
+        implicit none
+        REAL T,VEC,VB,AU,QLO,RTP,PA,HR,ANC,VUD,REK,NID,I3
 c        write(6,899) NID
 c  899   format(E12.6)
 c output file header:
@@ -713,11 +764,12 @@ c  901     FORMAT ('setting NID to 0.5 at time ', E8.2)
      * CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
      * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
      * VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP)
+        implicit none
 
-      REAL T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
-     *  CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
-     *  PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
-     *  VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP
+        REAL T,NID,NOD,NAE,PA,QLO,QAO,HR,VB,VP,VEC,VTS,
+     *    CNA,TVD,VTW,REK,NED,AAR,BFM,BFN,CPP,DLP,GFR,GLP,HM,IFP,PFL,
+     *    PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
+     *    VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP
 
 c     CA and EVR variables are constants, that are hardcoded here
 c     in Fortran code. Removing from output.
