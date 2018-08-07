@@ -37,7 +37,7 @@ c        INCLUDE 'noDeclarations.inc'
 
 c     Open the result file:
       open (102, FILE = 'Guyton72Results.txt', ACTION = 'WRITE')
-      open (103, FILE = 'Guyton72ResultsAll.txt', ACTION = 'WRITE')
+c      open (103, FILE = 'Guyton72ResultsAll.txt', ACTION = 'WRITE')
       write(6,5)
     5 FORMAT  (/'GUYTON MODEL FROM WHITE'/
      *   '   REFER TO GE-AGS USER GUIDE TIR 741-MED-3017'//)
@@ -54,35 +54,35 @@ c     Ted's protocol:
      * PRP,PVS,RBF,RFN,RR,RSM,RSN,SVO,VAE,VAS,VG,VIF,VUD,AU,AUH,AUM,
      * VVS,ARM,STH,VGD,ANC,ANM,ANT,ANU,ANP,RTP)
 
-      CALL writeAll(AAR, AGK, AH, AHC, AHK, AHM, AHY, AHZ, AH8,
-     *  ALO, AM, AMC, AMM, AMP, AMR, AMT, AM1,
-     *  ANC, ANM, ANP, ANR, ANT, ANU, ANV, ANW, ANY, ANZ, AN1, AOM, APD,
-     *  ARF, ARM, AR1, AR2, AR3, AU, AUB, AUC, AUH,
-     *  AUJ, AUK, AUL, AUM, AUN, AUO, AUP, AUQ, AUR, AUS, AUV, AUX, AUY,
-     *  AUZ, AU4, AU6, AU8, AVE, A1B, A1K, A2K, A3K, A4K, BFM,
-     *  BFN, CCD, CFC, CHY, CKE, CKI, CNA, CNB, CNR, CNE, CNX, CNY, CNZ,
-     *  CN2, CN3, CN7, CPF, CPG, CPI, CPK,
-     *  CPN, CPP, CPR, CV, DAS, DAU, DFP, DHM, DLA, DLP, DLZ, DOB, DPA,
-     *  DPC, DPI, DPL, DPO, DRA, DVS, EXC, EXE, EX1,
-     *  FIS, GBL, GFN, GFR, GF1, GF2, GF3, GF4, GLP, GPD, GPR, HKM, HM,
-     *  HMD, HMK, HPL, HPR, HR, HSL, HSR, HYL, I, IFP, I1,
-     *  I2, I3, KCD, KE, KED, KI, KID, KIE, KIR, KOD, LPK, LVM, MMO,
-     *  MO2, NAE, NED, NID, NOD, NOZ, OMM, OSA, OSV,
-     *  OVA, OVS, O2A, O2M, PA, PAM, PAR, PA1, PA2, PC, PCD, PCE, PCP,
-     *  PDO, PFI, PFL, PGC, PGH, PGL, PGP, PGR, PGS, PGV,
-     *  PGX, PIF, PK1, PK2, PK3, PLA, PLD, PLF, PMC, PMO, PMP, PMS, PM1,
-     *  PM3, PM4, PM5, POA, POB, POC, POD, POE, POK,
-     *  POM, PON, POQ, POR, POS, POT, POV, POY, POZ, PO1, PO2, PPA, PPC,
-     *  PPD, PPI, PPN, PPO, PPR, PP1, PP2, PRA, PRM,
-     *  PRP, PR1, PTC, PTS, PTT, PVG, PVO, PVS, P1O, P2O, QAO, QLN, QLO,
-     *  QOM, QO2, QPO, QRF, QRN, QRO, QVO, RAM, RAR, RBF,
-     *  RCD, RC1, RC2, RDO, REK, RFN, RKC, RMO, RPA, RPT, RPV, RR, RSM,
-     *  RSN, RTP, RVG, RVM, RVS, SR, SRK, STA, STH, SVO,
-     *  T, TRR, TVD, TVZ, T1, U, VAE, VAS, VB, VBD, VEC, VG, VGD, VIB,
-     *  VIC, VID, VIE, VIF, VIM, VLA, VLE, VP,
-     *  VPA, VPD, VPE, VPF, VRA, VRC, VRE, VTC, VTD, VTL, VTS, VTW, VUD,
-     *  VVE, VVR, VVS, VV6, VV7, VV8, VV9, V2D, X,
-     *  Y, Z, Z1, Z3, Z4, Z5, Z6, Z7, Z8, Z10, Z11, Z12, Z13)
+!      CALL writeAll(AAR, AGK, AH, AHC, AHK, AHM, AHY, AHZ, AH8,
+!     *  ALO, AM, AMC, AMM, AMP, AMR, AMT, AM1,
+!     *  ANC, ANM, ANP, ANR, ANT, ANU, ANV, ANW, ANY, ANZ, AN1, AOM, APD,
+!     *  ARF, ARM, AR1, AR2, AR3, AU, AUB, AUC, AUH,
+!     *  AUJ, AUK, AUL, AUM, AUN, AUO, AUP, AUQ, AUR, AUS, AUV, AUX, AUY,
+!     *  AUZ, AU4, AU6, AU8, AVE, A1B, A1K, A2K, A3K, A4K, BFM,
+!     *  BFN, CCD, CFC, CHY, CKE, CKI, CNA, CNB, CNR, CNE, CNX, CNY, CNZ,
+!     *  CN2, CN3, CN7, CPF, CPG, CPI, CPK,
+!     *  CPN, CPP, CPR, CV, DAS, DAU, DFP, DHM, DLA, DLP, DLZ, DOB, DPA,
+!     *  DPC, DPI, DPL, DPO, DRA, DVS, EXC, EXE, EX1,
+!     *  FIS, GBL, GFN, GFR, GF1, GF2, GF3, GF4, GLP, GPD, GPR, HKM, HM,
+!     *  HMD, HMK, HPL, HPR, HR, HSL, HSR, HYL, I, IFP, I1,
+!     *  I2, I3, KCD, KE, KED, KI, KID, KIE, KIR, KOD, LPK, LVM, MMO,
+!     *  MO2, NAE, NED, NID, NOD, NOZ, OMM, OSA, OSV,
+!     *  OVA, OVS, O2A, O2M, PA, PAM, PAR, PA1, PA2, PC, PCD, PCE, PCP,
+!     *  PDO, PFI, PFL, PGC, PGH, PGL, PGP, PGR, PGS, PGV,
+!     *  PGX, PIF, PK1, PK2, PK3, PLA, PLD, PLF, PMC, PMO, PMP, PMS, PM1,
+!     *  PM3, PM4, PM5, POA, POB, POC, POD, POE, POK,
+!     *  POM, PON, POQ, POR, POS, POT, POV, POY, POZ, PO1, PO2, PPA, PPC,
+!     *  PPD, PPI, PPN, PPO, PPR, PP1, PP2, PRA, PRM,
+!     *  PRP, PR1, PTC, PTS, PTT, PVG, PVO, PVS, P1O, P2O, QAO, QLN, QLO,
+!     *  QOM, QO2, QPO, QRF, QRN, QRO, QVO, RAM, RAR, RBF,
+!     *  RCD, RC1, RC2, RDO, REK, RFN, RKC, RMO, RPA, RPT, RPV, RR, RSM,
+!     *  RSN, RTP, RVG, RVM, RVS, SR, SRK, STA, STH, SVO,
+!     *  T, TRR, TVD, TVZ, T1, U, VAE, VAS, VB, VBD, VEC, VG, VGD, VIB,
+!     *  VIC, VID, VIE, VIF, VIM, VLA, VLE, VP,
+!     *  VPA, VPD, VPE, VPF, VRA, VRC, VRE, VTC, VTD, VTL, VTS, VTW, VUD,
+!     *  VVE, VVR, VVS, VV6, VV7, VV8, VV9, V2D, X,
+!     *  Y, Z, Z1, Z3, Z4, Z5, Z6, Z7, Z8, Z10, Z11, Z12, Z13)
 
 c      write(6,6)
 c6     format ("T, RTP, NAE, QLO, PA, ARM, RR, VB, HR")
@@ -825,7 +825,7 @@ c       after another week high salt diet
         if (T.GT.383040) GO TO 101
         RETURN
   101   close(102)
-        close(103)
+c        close(103)
         write(6,*) 'Finished.'
         STOP
       END
